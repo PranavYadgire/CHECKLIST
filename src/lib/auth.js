@@ -1,43 +1,44 @@
-// Trello REST API Client authorization helpers.
-// Trello's Power-Up REST API client securely manages the member token.
+// Trello Power-Up authentication configuration
 
-export const APP_KEY = import.meta.env.VITE_TRELLO_APP_KEY;
-export const APP_NAME = "Reusable Checklist Library";
+export const APP_KEY =
+  import.meta.env.VITE_TRELLO_APP_KEY;
 
-/**
- * Returns Trello's REST API client.
- */
+export const APP_NAME =
+  "Reusable Checklist Library";
+
 export function getRestApi(t) {
   if (!t || typeof t.getRestApi !== "function") {
-    throw new Error("Trello REST API client is unavailable.");
+    throw new Error(
+      "Trello REST API client is unavailable."
+    );
   }
 
   return t.getRestApi();
 }
 
-/**
- * Returns the token managed by Trello's REST API client.
- */
 export async function getToken(t) {
   try {
-    const client = getRestApi(t);
-    return await client.getToken();
+    const api = await getRestApi(t);
+
+    return await api.getToken();
   } catch (error) {
-    console.error("[Checklist Library] getToken error:", error);
+    console.error(
+      "[Checklist Library] getToken error:",
+      error
+    );
+
     return null;
   }
 }
 
-/**
- * Check whether the current Trello member has authorized the Power-Up.
- */
 export async function isAuthorized(t) {
   try {
-    const client = getRestApi(t);
-    return await client.isAuthorized();
+    const api = await getRestApi(t);
+
+    return await api.isAuthorized();
   } catch (error) {
     console.error(
-      "[Checklist Library] authorization check failed:",
+      "[Checklist Library] isAuthorized error:",
       error
     );
 
@@ -45,12 +46,6 @@ export async function isAuthorized(t) {
   }
 }
 
-/**
- * Start Trello authorization.
- *
- * Trello handles the authorization popup and securely stores
- * the resulting token for the member.
- */
 export async function authorize(t) {
   if (!APP_KEY) {
     throw new Error(
@@ -58,20 +53,19 @@ export async function authorize(t) {
     );
   }
 
-  const client = getRestApi(t);
+  const api = await getRestApi(t);
 
-  return client.authorize({
-    expiration: "never"
+  return api.authorize({
+    expiration: "never",
+    scope: "read,write"
   });
 }
 
-/**
- * Remove the token managed by Trello's REST API client.
- */
 export async function clearToken(t) {
   try {
-    const client = getRestApi(t);
-    await client.clearToken();
+    const api = await getRestApi(t);
+
+    await api.clearToken();
   } catch (error) {
     console.error(
       "[Checklist Library] clearToken error:",
