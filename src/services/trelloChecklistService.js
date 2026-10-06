@@ -1,140 +1,108 @@
-// Trello card checklist operations.
+// Trello checklist operations
 
-import {
-  APP_KEY,
-  APP_NAME,
-} from "../lib/auth.js";
+export const NOT_AUTHORIZED =
+  "NOT_AUTHORIZED";
 
-export const NOT_AUTHORIZED = "NOT_AUTHORIZED";
 
-/**
- * Get a REST API client configured for this Power-Up.
- *
- * This is important because checklists.html is a secondary
- * iframe. Trello requires the REST API client to know the
- * Power-Up app key and app name.
- */
-async function getRestApi() {
-  if (
-    !window.TrelloPowerUp ||
-    typeof window.TrelloPowerUp.iframe !== "function"
-  ) {
+export async function applyTemplateToCard(
+  t,
+  template
+) {
+
+  if (!t) {
     throw new Error(
-      "Trello Power-Up client is unavailable."
+      "Trello context is unavailable."
     );
   }
 
-  const t = window.TrelloPowerUp.iframe({
-    appKey: APP_KEY,
-    appName: APP_NAME,
-  });
-
-  const restApi = await t.getRestApi();
-
-  return {
-    t,
-    restApi,
-  };
-}
-
-
-/**
- * Authorize the current Trello member if necessary.
- *
- * This function is called after the user clicks
- * "Add to Card", so Trello is allowed to open its
- * consent popup.
- */
-async function ensureAuthorized(restApi) {
-
-  const authorized =
-    await restApi.isAuthorized();
-
-  if (authorized) {
-    return;
-  }
-
-  await restApi.authorize({
-    expiration: "never",
-    scope: "read,write",
-  });
-
-  const authorizedAfter =
-    await restApi.isAuthorized();
-
-  if (!authorizedAfter) {
-    throw new Error(NOT_AUTHORIZED);
-  }
-}
-
-
-/**
- * Add a checklist template to the current Trello card.
- */
-export async function applyTemplateToCard(
-  originalT,
-  template
-) {
 
   if (
     !template ||
     !template.name ||
     !Array.isArray(template.items) ||
-    !template.items.length
+    template.items.length === 0
   ) {
     throw new Error(
       "Invalid checklist template."
     );
   }
 
-  const {
-    t,
-    restApi,
-  } = await getRestApi();
+
+  console.log(
+    "[Checklist Library] Getting Trello REST API..."
+  );
 
 
-  /*
-   * Make sure the member is authorized before
-   * attempting any Trello REST API request.
-   */
-  await ensureAuthorized(restApi);
+  const api =
+    await t.getRestApi();
 
 
-  /*
-   * Get the current Trello card.
-   */
+  const authorized =
+    await api.isAuthorized();
+
+
+  console.log(
+    "[Checklist Library] Authorized:",
+    authorized
+  );
+
+
+  if (!authorized) {
+
+    const error =
+      new Error(
+        NOT_AUTHORIZED
+      );
+
+    error.code =
+      NOT_AUTHORIZED;
+
+    throw error;
+  }
+
+
   const card =
     await t.card("id");
 
-  if (!card?.id) {
+
+  if (!card || !card.id) {
     throw new Error(
       "Could not find the current Trello card."
     );
   }
 
 
-  /*
-   * Create the checklist on the card.
-   */
+  console.log(
+    "[Checklist Library] Card:",
+    card.id
+  );
+
+
   const checklist =
-    await restApi.post(
+    await api.post(
       `/cards/${card.id}/checklists`,
       {
-        name: template.name,
+        name: template.name
       }
     );
 
 
-  if (!checklist?.id) {
+  if (
+    !checklist ||
+    !checklist.id
+  ) {
     throw new Error(
-      "Trello did not return the new checklist."
+      "Trello did not return the created checklist."
     );
   }
 
 
-  /*
-   * Create every checklist item.
-   */
+  console.log(
+    "[Checklist Library] Checklist created:",
+    checklist.id
+  );
+
+
   for (
     const item of template.items
   ) {
@@ -146,15 +114,23 @@ export async function applyTemplateToCard(
             item?.name || ""
           ).trim();
 
+
     if (!itemName) {
       continue;
     }
 
-    await restApi.post(
+
+    await api.post(
       `/checklists/${checklist.id}/checkItems`,
       {
-        name: itemName,
+        name: itemName
       }
+    );
+
+
+    console.log(
+      "[Checklist Library] Added item:",
+      itemName
     );
   }
 

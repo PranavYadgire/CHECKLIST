@@ -1576,7 +1576,6 @@ async function addToCard(){
     );
 
     return;
-
   }
 
   try{
@@ -1584,8 +1583,16 @@ async function addToCard(){
     screen = "added";
     render();
 
+    /*
+     * Trello iframe with appKey and appName
+     */
+
     const trello =
-      window.TrelloPowerUp.iframe();
+  window.TrelloPowerUp.iframe({
+    appKey: window.RCL_APP_KEY,
+    appName: window.RCL_APP_NAME
+  });
+
 
     if(
       !trello ||
@@ -1598,8 +1605,10 @@ async function addToCard(){
 
     }
 
+
     const card =
       await trello.card("id");
+
 
     if(!card || !card.id){
 
@@ -1609,41 +1618,46 @@ async function addToCard(){
 
     }
 
-    /*
-      IMPORTANT:
-      This uses the Trello REST API client
-      available through the Power-Up iframe.
-    */
 
-    const restApi = trello.getRestApi();
+    const restApi =
+      await trello.getRestApi();
 
-let authorized = await restApi.isAuthorized();
 
-if (!authorized) {
-  await restApi.authorize({
-    expiration: "never"
-  });
+    let authorized =
+      await restApi.isAuthorized();
 
-  authorized = await restApi.isAuthorized();
-}
 
-if (!authorized) {
-  throw new Error(
-    "Trello authorization was not completed."
-  );
-}
+    if(!authorized){
 
-    /*
-      Create checklist on current card.
-    */
+      await restApi.authorize({
+        expiration: "never",
+        scope: "read,write"
+      });
+
+
+      authorized =
+        await restApi.isAuthorized();
+
+    }
+
+
+    if(!authorized){
+
+      throw new Error(
+        "Trello authorization was not completed."
+      );
+
+    }
+
 
     const checklist =
       await restApi.post(
         `/cards/${card.id}/checklists`,
         {
-          name:selected.name
+          name: selected.name
         }
       );
+
 
     if(
       !checklist ||
@@ -1656,9 +1670,6 @@ if (!authorized) {
 
     }
 
-    /*
-      Create each checklist item.
-    */
 
     for(
       const item of selected.items
@@ -1671,18 +1682,21 @@ if (!authorized) {
               item?.name || ""
             ).trim();
 
+
       if(!itemName){
         continue;
       }
 
+
       await restApi.post(
         `/checklists/${checklist.id}/checkItems`,
         {
-          name:itemName
+          name: itemName
         }
       );
 
     }
+
 
     app.innerHTML = `
 
@@ -1716,6 +1730,7 @@ if (!authorized) {
 
     `;
 
+
   }catch(error){
 
     console.error(
@@ -1724,7 +1739,6 @@ if (!authorized) {
     );
 
     screen = "preview";
-
     render();
 
     toast(
@@ -1765,6 +1779,14 @@ function added(){
 render();
 
 </script>
+<script type="module">
+  import {
+    APP_KEY,
+    APP_NAME
+  } from "/src/lib/auth.js";
 
+  window.RCL_APP_KEY = APP_KEY;
+  window.RCL_APP_NAME = APP_NAME;
+</script>
 </body>
 </html>
