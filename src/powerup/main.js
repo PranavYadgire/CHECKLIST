@@ -1,17 +1,11 @@
 /* global TrelloPowerUp */
 
 import {
+  APP_KEY,
+  APP_NAME,
   isAuthorized,
+  authorize
 } from "../lib/auth.js";
-
-
-const APP_KEY =
-  import.meta.env
-    .VITE_TRELLO_APP_KEY;
-
-
-const APP_NAME =
-  "Reusable Checklist Library";
 
 
 const ICON_URL =
@@ -22,58 +16,71 @@ const ICON_URL =
 
 
 TrelloPowerUp.initialize(
-
   {
 
+    /*
+     * Tell Trello whether this member has already
+     * authorized REST API access.
+     */
     "authorization-status":
       async function (t) {
 
-        const authorized =
-          await isAuthorized(t);
+        try {
 
-        return {
-          authorized,
-        };
+          const authorized =
+            await isAuthorized(t);
+
+          return {
+            authorized:
+              Boolean(authorized)
+          };
+
+        } catch (error) {
+
+          console.error(
+            "[Checklist Library] authorization-status error:",
+            error
+          );
+
+          return {
+            authorized: false
+          };
+        }
 
       },
 
 
+    /*
+     * Called when Trello displays:
+     * "Authorize Account"
+     */
     "show-authorization":
-      function (t) {
+      async function (t) {
 
-        return t.popup({
+        try {
 
-          title:
-            "Authorize Reusable Checklist Library",
+          await authorize(t);
 
-          url:
-            "./auth.html",
+          return {
+            authorized: true
+          };
 
-          height: 320,
+        } catch (error) {
 
-        });
+          console.error(
+            "[Checklist Library] authorization failed:",
+            error
+          );
 
-      },
-
-
-    "show-settings":
-      function (t) {
-
-        return t.popup({
-
-          title:
-            "Reusable Checklist Library Settings",
-
-          url:
-            "./auth.html",
-
-          height: 320,
-
-        });
+          throw error;
+        }
 
       },
 
 
+    /*
+     * Card-back Power-Up section.
+     */
     "card-back-section":
       function (t) {
 
@@ -96,24 +103,27 @@ TrelloPowerUp.initialize(
               ),
 
             height:
-              115,
+              115
 
-          },
+          }
 
         };
 
-      },
+      }
 
   },
 
 
+  /*
+   * These values enable Trello's REST API client.
+   */
   {
 
     appKey:
       APP_KEY,
 
     appName:
-      APP_NAME,
+      APP_NAME
 
   }
 

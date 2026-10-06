@@ -1615,33 +1615,23 @@ async function addToCard(){
       available through the Power-Up iframe.
     */
 
-    let restApi = null;
+    const restApi = trello.getRestApi();
 
-    try{
+let authorized = await restApi.isAuthorized();
 
-      if(
-        typeof trello.getRestApi === "function"
-      ){
-        restApi =
-          await trello.getRestApi();
-      }
+if (!authorized) {
+  await restApi.authorize({
+    expiration: "never"
+  });
 
-    }catch(restError){
+  authorized = await restApi.isAuthorized();
+}
 
-      console.warn(
-        "REST API client unavailable:",
-        restError
-      );
-
-    }
-
-    if(!restApi){
-
-      throw new Error(
-        "Trello authorization is required. Please authorize the Power-Up first."
-      );
-
-    }
+if (!authorized) {
+  throw new Error(
+    "Trello authorization was not completed."
+  );
+}
 
     /*
       Create checklist on current card.

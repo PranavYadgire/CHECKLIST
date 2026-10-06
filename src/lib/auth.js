@@ -1,76 +1,81 @@
-// Single source of truth for member's Trello authentication token.
-//
-// The token is stored in Trello's member-scoped private plugin storage:
-// `t.set('member', 'private', 'token', token)`.
-// It is scoped to that single member on the current board and cannot be read
-// by any other board member. It is never placed in localStorage or sent to external servers.
+// Trello REST API Client authorization helpers.
+// Trello's Power-Up REST API client securely manages the member token.
 
 export const APP_KEY = import.meta.env.VITE_TRELLO_APP_KEY;
-export const APP_NAME = "Insight";
-
-// Shared message tag validated by authorized.js and AuthPopup.jsx
-export const AUTH_MESSAGE_SOURCE = "insight-auth";
-
-const TOKEN_KEY = "token";
+export const APP_NAME = "Reusable Checklist Library";
 
 /**
- * Retrieves the stored token from Trello member-private storage.
- * @param {object} t - Trello Power-Up client instance
+ * Returns Trello's REST API client.
  */
-export function getToken(t) {
-  if (!t || typeof t.get !== "function") return Promise.resolve(null);
-  return t.get("member", "private", TOKEN_KEY);
+export function getRestApi(t) {
+  if (!t || typeof t.getRestApi !== "function") {
+    throw new Error("Trello REST API client is unavailable.");
+  }
+
+  return t.getRestApi();
 }
 
 /**
- * Saves the authenticated token into Trello member-private storage.
- * @param {object} t - Trello Power-Up client instance
- * @param {string} token - Trello member OAuth token
+ * Returns the token managed by Trello's REST API client.
  */
-export function saveToken(t, token) {
-  if (!t || typeof t.set !== "function") return Promise.resolve();
-  return t.set("member", "private", TOKEN_KEY, token);
+export async function getToken(t) {
+  try {
+    const client = getRestApi(t);
+    return await client.getToken();
+  } catch (error) {
+    console.error("[Checklist Library] getToken error:", error);
+    return null;
+  }
 }
 
 /**
- * Clears the stored token from Trello member-private storage.
- * @param {object} t - Trello Power-Up client instance
- */
-export function clearToken(t) {
-  if (!t || typeof t.remove !== "function") return Promise.resolve();
-  return t.remove("member", "private", TOKEN_KEY);
-}
-
-/**
- * Checks whether the member currently has a validly stored token.
- * @param {object} t - Trello Power-Up client instance
- * @returns {Promise<boolean>}
+ * Check whether the current Trello member has authorized the Power-Up.
  */
 export async function isAuthorized(t) {
-  const token = await getToken(t);
-  return Boolean(token);
+  try {
+    const client = getRestApi(t);
+    return await client.isAuthorized();
+  } catch (error) {
+    console.error(
+      "[Checklist Library] authorization check failed:",
+      error
+    );
+
+    return false;
+  }
 }
 
 /**
- * Constructs the Trello OAuth authorization URL.
- * @param {string} returnUrl - Full URL to authorized.html on the current origin
- * @returns {string} Complete authorization URL
+ * Start Trello authorization.
+ *
+ * Trello handles the authorization popup and securely stores
+ * the resulting token for the member.
  */
-export function buildAuthorizeUrl(returnUrl) {
-  if (!APP_KEY || APP_KEY === "your_trello_app_key_here") {
-    console.warn(
-      "[Insight] VITE_TRELLO_APP_KEY is not configured in .env. Authorization will fail until a valid key is set."
+export async function authorize(t) {
+  if (!APP_KEY) {
+    throw new Error(
+      "VITE_TRELLO_APP_KEY is not configured."
     );
   }
 
-  const params = new URLSearchParams({
-    expiration: "never",
-    name: APP_NAME,
-    scope: "read,write",
-    response_type: "token",
-    key: APP_KEY || "",
-    return_url: returnUrl,
-  });
+  const client = getRestApi(t);
 
-  return `https://trello.com/1/authorize?${params.toString()}`;
+  return client.authorize({
+    expiration: "never"
+  });
+}
+
+/**
+ * Remove the token managed by Trello's REST API client.
+ */
+export async function clearToken(t) {
+  try {
+    const client = getRestApi(t);
+    await client.clearToken();
+  } catch (error) {
+    console.error(
+      "[Checklist Library] clearToken error:",
+      error
+    );
+  }
 }
