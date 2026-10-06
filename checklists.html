@@ -1,0 +1,1874 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Checklist Templates</title>
+
+  <style>
+    :root{
+      --blue:#0c66e4;
+      --blue-soft:#e9f2ff;
+      --text:#172b4d;
+      --muted:#626f86;
+      --line:#dfe1e6;
+      --light:#f1f2f4;
+      --danger:#de350b;
+      --danger-soft:#ffebe6;
+      --green:#22a06b;
+      --white:#ffffff;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:#fff;
+      color:var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      font-size:13px;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    #app{
+      width:100%;
+      max-width:430px;
+      min-height:100vh;
+      margin:0 auto;
+      background:#fff;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header{
+      height:54px;
+      padding:0 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--line);
+    }
+
+    .header h1{
+      margin:0;
+      font-size:16px;
+      font-weight:700;
+    }
+
+    .close{
+      border:0;
+      background:transparent;
+      color:#44546f;
+      font-size:22px;
+      line-height:1;
+      padding:3px 5px;
+    }
+
+    /* =========================
+       LIBRARY
+    ========================= */
+
+    .content{
+      padding:12px 14px 16px;
+    }
+
+    .search{
+      width:100%;
+      height:36px;
+      border:1px solid var(--line);
+      border-radius:6px;
+      padding:0 11px;
+      outline:none;
+      color:var(--text);
+      background:#fff;
+    }
+
+    .search:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 1px var(--blue);
+    }
+
+    .tabs{
+      display:flex;
+      border-bottom:1px solid var(--line);
+      margin-top:8px;
+    }
+
+    .tab{
+      flex:1;
+      border:0;
+      background:#fff;
+      color:#44546f;
+      padding:9px 5px 8px;
+    }
+
+    .tab.active{
+      color:var(--blue);
+      font-weight:600;
+      border-bottom:2px solid var(--blue);
+    }
+
+    .create{
+      width:100%;
+      border:0;
+      border-radius:5px;
+      background:var(--blue-soft);
+      color:var(--blue);
+      font-weight:600;
+      padding:9px;
+      margin:10px 0 12px;
+    }
+
+    .create:hover{
+      background:#dfeeff;
+    }
+
+    .category{
+      font-size:12px;
+      font-weight:700;
+      margin:12px 2px 5px;
+      color:var(--text);
+    }
+
+    .template{
+      min-height:54px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 4px;
+      border-bottom:1px solid #f1f2f4;
+      border-radius:6px;
+    }
+
+    .template:hover{
+      background:#f7f8f9;
+    }
+
+    .doc{
+      width:34px;
+      height:34px;
+      border-radius:7px;
+      background:#f1f2f4;
+      display:grid;
+      place-items:center;
+      color:#44546f;
+      font-size:16px;
+      flex-shrink:0;
+    }
+
+    .template-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .template-name{
+      font-weight:600;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .template-description{
+      margin-top:2px;
+      color:var(--muted);
+      font-size:11px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .count{
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .more{
+      border:0;
+      background:transparent;
+      color:#44546f;
+      padding:3px 5px;
+      font-size:17px;
+      line-height:1;
+    }
+
+    .more:hover{
+      background:#f1f2f4;
+      border-radius:4px;
+    }
+
+    .empty{
+      text-align:center;
+      color:var(--muted);
+      padding:30px 8px;
+    }
+
+    /* =========================
+       MENU
+    ========================= */
+
+    .menu{
+      position:fixed;
+      z-index:50;
+      width:158px;
+      padding:4px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:0 5px 16px rgba(9,30,66,.18);
+      border-radius:6px;
+    }
+
+    .menu button{
+      width:100%;
+      text-align:left;
+      border:0;
+      background:#fff;
+      padding:8px 9px;
+      border-radius:4px;
+      color:var(--text);
+    }
+
+    .menu button:hover{
+      background:#f1f2f4;
+    }
+
+    .menu .danger{
+      color:var(--danger);
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form{
+      padding:14px 16px;
+    }
+
+    .form h2{
+      font-size:16px;
+      margin:0 0 14px;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    .field label{
+      display:block;
+      font-weight:700;
+      margin-bottom:5px;
+    }
+
+    .field input,
+    .field select{
+      width:100%;
+      height:32px;
+      border:1px solid #b6c2cf;
+      border-radius:5px;
+      padding:0 9px;
+      background:#fff;
+      outline:none;
+      font-size:13px;
+    }
+
+    .field input:focus,
+    .field select:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 1px var(--blue);
+    }
+
+    .items-label{
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .items{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+
+    .item{
+      display:flex;
+      align-items:center;
+      gap:5px;
+    }
+
+    .grip{
+      width:13px;
+      color:#6b778c;
+      text-align:center;
+      font-size:12px;
+    }
+
+    .item-input{
+      flex:1;
+      min-width:0;
+      height:30px;
+      border:1px solid var(--line);
+      border-radius:5px;
+      padding:0 8px;
+      outline:none;
+      font-size:13px;
+    }
+
+    .item-input:focus{
+      border-color:var(--blue);
+    }
+
+    .trash{
+      width:26px;
+      height:28px;
+      border:0;
+      background:#fff;
+      color:#626f86;
+      padding:3px;
+      font-size:14px;
+    }
+
+    .trash:hover{
+      color:var(--danger);
+      background:var(--danger-soft);
+      border-radius:4px;
+    }
+
+    .add-item{
+      border:0;
+      background:#f1f2f4;
+      color:var(--text);
+      border-radius:5px;
+      padding:7px 10px;
+      margin-top:7px;
+      font-size:13px;
+    }
+
+    .add-item:hover{
+      background:#dfe1e6;
+    }
+
+    .form-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      border-top:1px solid #f1f2f4;
+      margin-top:14px;
+      padding-top:11px;
+    }
+
+    .form-actions-right{
+      margin-left:auto;
+      display:flex;
+      gap:8px;
+    }
+
+    .primary,
+    .secondary,
+    .delete-template{
+      border:0;
+      border-radius:5px;
+      padding:8px 12px;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .primary{
+      background:var(--blue);
+      color:#fff;
+    }
+
+    .primary:hover{
+      background:#0755c7;
+    }
+
+    .secondary{
+      background:#f1f2f4;
+      color:var(--text);
+    }
+
+    .secondary:hover{
+      background:#dfe1e6;
+    }
+
+    .delete-template{
+      border:1px solid #ffbdad;
+      background:#fff;
+      color:var(--danger);
+    }
+
+    .delete-template:hover{
+      background:var(--danger-soft);
+    }
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
+    .success{
+      text-align:center;
+      padding:30px 20px 24px;
+    }
+
+    .check{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--green);
+      color:#fff;
+      font-size:25px;
+      margin:0 auto 12px;
+    }
+
+    .success h2{
+      font-size:17px;
+      margin:0 0 5px;
+    }
+
+    .success p{
+      color:var(--muted);
+      line-height:1.45;
+      margin:0;
+    }
+
+    .success-actions{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      margin-top:18px;
+    }
+
+    /* =========================
+       PREVIEW
+    ========================= */
+
+    .preview{
+      padding:15px 16px;
+    }
+
+    .preview-head{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:13px;
+    }
+
+    .preview-icon{
+      width:36px;
+      height:36px;
+      border-radius:7px;
+      background:#f1f2f4;
+      display:grid;
+      place-items:center;
+      font-size:18px;
+    }
+
+    .preview-head strong{
+      display:block;
+    }
+
+    .preview-head small{
+      display:block;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .preview-item{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      border:1px solid var(--line);
+      border-radius:5px;
+      padding:8px;
+      margin-bottom:6px;
+    }
+
+    .preview-item input{
+      width:15px;
+      height:15px;
+    }
+
+    .preview-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      border-top:1px solid #f1f2f4;
+      margin-top:14px;
+      padding-top:12px;
+    }
+
+    /* =========================
+       PICKER
+    ========================= */
+
+    .category-tabs{
+      display:flex;
+      overflow-x:auto;
+      border-bottom:1px solid var(--line);
+      margin:8px 0 9px;
+      scrollbar-width:none;
+    }
+
+    .category-tabs::-webkit-scrollbar{
+      display:none;
+    }
+
+    .category-tabs button{
+      border:0;
+      background:#fff;
+      color:#44546f;
+      padding:8px;
+      white-space:nowrap;
+    }
+
+    .category-tabs button.active{
+      color:var(--blue);
+      border-bottom:2px solid var(--blue);
+      font-weight:600;
+    }
+
+    .pick{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:54px;
+      padding:7px 3px;
+      border-bottom:1px solid #f1f2f4;
+    }
+
+    .pick-name{
+      flex:1;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .pick-name strong{
+      font-weight:600;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .pick-name small{
+      color:var(--muted);
+      font-size:11px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .pick button{
+      border:0;
+      background:var(--blue-soft);
+      color:var(--blue);
+      border-radius:5px;
+      padding:6px 11px;
+      font-weight:600;
+    }
+
+    .pick button:hover{
+      background:#dfeeff;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message{
+      margin:10px 0;
+      padding:9px 11px;
+      background:var(--blue-soft);
+      border-radius:6px;
+      color:#0747a6;
+    }
+
+    @media(max-width:520px){
+      .template{
+        gap:8px;
+      }
+
+      .count{
+        display:none;
+      }
+
+      .form-actions{
+        flex-wrap:wrap;
+      }
+
+      .form-actions-right{
+        margin-left:auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    /* ============================================================
+       STARTER TEMPLATES
+    ============================================================ */
+
+    const starter = [
+      {
+        id:"starter-project-kickoff",
+        name:"Project Kickoff",
+        description:"Get started with a new project",
+        category:"Project",
+        icon:"🚀",
+        items:[
+          "Define project goals",
+          "Identify stakeholders",
+          "Create project plan",
+          "Set deadlines",
+          "Assign responsibilities",
+          "Set up communication",
+          "Schedule kickoff"
+        ]
+      },
+      {
+        id:"starter-task-completion",
+        name:"Task Completion",
+        description:"Ensure all key steps are done",
+        category:"Tasks",
+        icon:"✅",
+        items:[
+          "Review task requirements",
+          "Complete development",
+          "Perform testing",
+          "Review changes",
+          "Get approval",
+          "Mark task complete"
+        ]
+      },
+      {
+        id:"starter-qa-review",
+        name:"QA & Review",
+        description:"Review and verify the work",
+        category:"QA & Testing",
+        icon:"🔍",
+        items:[
+          "Review requirements",
+          "Test functionality",
+          "Check edge cases",
+          "Verify UI",
+          "Check for defects",
+          "Complete final review"
+        ]
+      },
+      {
+        id:"starter-client-onboarding",
+        name:"Client Onboarding",
+        description:"Set up and onboard a new client",
+        category:"Onboarding",
+        icon:"👥",
+        items:[
+          "Create client profile",
+          "Send welcome email",
+          "Schedule kickoff call",
+          "Collect requirements",
+          "Set up access",
+          "Share documentation",
+          "Complete onboarding"
+        ]
+      },
+      {
+        id:"starter-feature-launch",
+        name:"Project / Feature Launch",
+        description:"Complete pre-launch checklist",
+        category:"Product Launch",
+        icon:"🎯",
+        items:[
+          "Finalize feature",
+          "Complete QA",
+          "Prepare documentation",
+          "Prepare launch assets",
+          "Get approval",
+          "Deploy",
+          "Monitor launch",
+          "Collect feedback"
+        ]
+      }
+    ];
+
+    /* ============================================================
+       MY TEMPLATES
+    ============================================================ */
+
+    let mine = JSON.parse(
+      localStorage.getItem("rcl_mine") || "null"
+    );
+
+    if(!Array.isArray(mine)){
+      mine = [
+        {
+          id:crypto.randomUUID(),
+          name:"Website QA Checklist",
+          description:"Complete website testing before release",
+          category:"QA & Testing",
+          icon:"▤",
+          items:[
+            "Test on staging environment",
+            "Check mobile view",
+            "Check broken links",
+            "Verify analytics tracking",
+            "Get client sign-off",
+            "Deploy to production"
+          ]
+        },
+        {
+          id:crypto.randomUUID(),
+          name:"Mobile App QA",
+          description:"Test important mobile application flows",
+          category:"QA & Testing",
+          icon:"▤",
+          items:[
+            "Install application",
+            "Test login",
+            "Test navigation",
+            "Check notifications",
+            "Test on multiple devices",
+            "Check performance",
+            "Verify app permissions",
+            "Test logout"
+          ]
+        }
+      ];
+
+      save();
+    }
+
+    /* ============================================================
+       STATE
+    ============================================================ */
+
+    let params = new URLSearchParams(location.search);
+
+    let screen =
+      params.get("mode") === "picker"
+        ? "picker"
+        : "list";
+
+    let tab = "mine";
+    let query = "";
+    let cat = "All";
+    let editIndex = -1;
+    let selected = null;
+
+    let pickerTemplates = [];
+
+    const app = document.getElementById("app");
+
+    /* ============================================================
+       HELPERS
+    ============================================================ */
+
+    function save(){
+      localStorage.setItem(
+        "rcl_mine",
+        JSON.stringify(mine)
+      );
+    }
+
+    function esc(value){
+      return String(value ?? "").replace(
+        /[&<>"']/g,
+        char => ({
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#39;"
+        }[char])
+      );
+    }
+
+    function closeMenu(){
+      document.querySelectorAll(".menu").forEach(
+        element => element.remove()
+      );
+    }
+
+    function header(title){
+      return `
+        <header class="header">
+          <h1>${esc(title)}</h1>
+
+          <button
+            class="close"
+            onclick="goBack()">
+            ×
+          </button>
+        </header>
+      `;
+    }
+
+    function goBack(){
+      if(
+        screen === "form" ||
+        screen === "preview" ||
+        screen === "created"
+      ){
+        screen = "list";
+      }
+      else if(screen === "added"){
+        screen = "picker";
+      }
+      else{
+        screen = "list";
+      }
+
+      render();
+    }
+
+    function render(){
+      closeMenu();
+
+      if(screen === "list") list();
+      if(screen === "form") form();
+      if(screen === "created") created();
+      if(screen === "picker") picker();
+      if(screen === "preview") preview();
+      if(screen === "added") added();
+    }
+
+    /* ============================================================
+       LIST
+    ============================================================ */
+
+    function list(){
+
+      const source =
+        tab === "mine"
+          ? mine
+          : starter;
+
+      const filtered = source.filter(template => {
+
+        const text = [
+          template.name,
+          template.description || "",
+          template.category
+        ]
+        .join(" ")
+        .toLowerCase();
+
+        return text.includes(
+          query.toLowerCase()
+        );
+      });
+
+      const groups = {};
+
+      filtered.forEach(template => {
+        if(!groups[template.category]){
+          groups[template.category] = [];
+        }
+
+        groups[template.category].push(template);
+      });
+
+      app.innerHTML =
+        header("Checklist Templates") +
+        `
+        <main class="content">
+
+          <input
+            class="search"
+            value="${esc(query)}"
+            placeholder="⌕  Search templates..."
+            oninput="
+              query=this.value;
+              render();
+            "
+          >
+
+          <div class="tabs">
+
+            <button
+              class="tab ${tab === "mine" ? "active" : ""}"
+              onclick="
+                tab='mine';
+                query='';
+                render();
+              ">
+              My Templates
+            </button>
+
+            <button
+              class="tab ${tab === "starter" ? "active" : ""}"
+              onclick="
+                tab='starter';
+                query='';
+                render();
+              ">
+              Starter Templates
+            </button>
+
+          </div>
+
+          <button
+            class="create"
+            onclick="newTemplate()">
+            ＋ Create Template
+          </button>
+
+          ${
+            Object.entries(groups)
+              .map(([category, templates]) => `
+
+                <div class="category">
+                  ${esc(category)}
+                </div>
+
+                ${
+                  templates.map(template => `
+
+                    <div class="template">
+
+                      <span class="doc">
+                        ${template.icon || "▤"}
+                      </span>
+
+                      <div class="template-info">
+
+                        <div class="template-name">
+                          ${esc(template.name)}
+                        </div>
+
+                        ${
+                          template.description
+                            ? `
+                              <div class="template-description">
+                                ${esc(template.description)}
+                              </div>
+                            `
+                            : ""
+                        }
+
+                      </div>
+
+                      <span class="count">
+                        ${template.items.length} items
+                      </span>
+
+                      <button
+                        class="more"
+                        onclick="
+                          menu(
+                            event,
+                            '${template.id}'
+                          );
+                        ">
+                        ···
+                      </button>
+
+                    </div>
+
+                  `).join("")
+                }
+
+              `)
+              .join("")
+          }
+
+          ${
+            filtered.length === 0
+              ? `
+                <div class="empty">
+                  No templates found.
+                </div>
+              `
+              : ""
+          }
+
+        </main>
+        `;
+    }
+
+    /* ============================================================
+       MENU
+    ============================================================ */
+
+    function menu(event,id){
+
+      event.stopPropagation();
+
+      closeMenu();
+
+      const template =
+        [...mine,...starter]
+          .find(x => x.id === id);
+
+      if(!template) return;
+
+      const rect =
+        event.currentTarget
+          .getBoundingClientRect();
+
+      const menuElement =
+        document.createElement("div");
+
+      menuElement.className = "menu";
+
+      menuElement.style.left =
+        Math.max(
+          8,
+          Math.min(
+            rect.left - 145,
+            window.innerWidth - 166
+          )
+        ) + "px";
+
+      menuElement.style.top =
+        Math.min(
+          rect.bottom + 4,
+          window.innerHeight - 190
+        ) + "px";
+
+      const isStarter =
+        starter.some(
+          x => x.id === template.id
+        );
+
+      menuElement.innerHTML = `
+
+        <button
+          onclick="
+            addById('${template.id}');
+          ">
+          ＋ &nbsp; Add to Card
+        </button>
+
+        <button
+          onclick="
+            previewById('${template.id}');
+          ">
+          ◉ &nbsp; View Details
+        </button>
+
+        ${
+          !isStarter
+            ? `
+              <button
+                onclick="
+                  editById('${template.id}');
+                ">
+                ✎ &nbsp; Edit Template
+              </button>
+
+              <button
+                onclick="
+                  duplicateById('${template.id}');
+                ">
+                ▣ &nbsp; Duplicate
+              </button>
+
+              <button
+                class="danger"
+                onclick="
+                  deleteById('${template.id}');
+                ">
+                🗑 &nbsp; Delete
+              </button>
+            `
+            : ""
+        }
+
+      `;
+
+      document.body.appendChild(
+        menuElement
+      );
+
+      setTimeout(() => {
+
+        document.addEventListener(
+          "click",
+          closeMenu,
+          {once:true}
+        );
+
+      },0);
+    }
+
+    /* ============================================================
+       CREATE / EDIT
+    ============================================================ */
+
+    function newTemplate(){
+      editIndex = -1;
+      screen = "form";
+      render();
+    }
+
+    function editById(id){
+
+      editIndex =
+        mine.findIndex(
+          x => x.id === id
+        );
+
+      if(editIndex < 0) return;
+
+      screen = "form";
+
+      render();
+    }
+
+    function form(){
+
+      const existing =
+        editIndex >= 0
+          ? mine[editIndex]
+          : {
+              name:"",
+              description:"",
+              category:"QA & Testing",
+              items:[""]
+            };
+
+      app.innerHTML =
+        header(
+          editIndex >= 0
+            ? "Edit Checklist Template"
+            : "Create Checklist Template"
+        ) +
+        `
+
+        <form
+          class="form"
+          onsubmit="saveForm(event)">
+
+          <div class="field">
+
+            <label>
+              Template Name
+            </label>
+
+            <input
+              id="name"
+              required
+              maxlength="80"
+              value="${esc(existing.name)}"
+              placeholder="Enter template name"
+            >
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Description
+            </label>
+
+            <input
+              id="description"
+              maxlength="120"
+              value="${esc(existing.description || "")}"
+              placeholder="Short description"
+            >
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Category
+            </label>
+
+            <select id="category">
+
+              <option>QA & Testing</option>
+              <option>Project</option>
+              <option>Tasks</option>
+              <option>Product Launch</option>
+              <option>Onboarding</option>
+              <option>Marketing</option>
+              <option>General</option>
+
+            </select>
+
+          </div>
+
+          <div class="items-label">
+            Checklist Items
+          </div>
+
+          <div
+            class="items"
+            id="items">
+
+            ${
+              existing.items
+                .map(
+                  (item,index) =>
+                    itemRow(item,index)
+                )
+                .join("")
+            }
+
+          </div>
+
+          <button
+            type="button"
+            class="add-item"
+            onclick="addItem()">
+            ＋ Add item
+          </button>
+
+          <div class="form-actions">
+
+            ${
+              editIndex >= 0
+                ? `
+                  <button
+                    type="button"
+                    class="delete-template"
+                    onclick="deleteCurrentTemplate()">
+                    Delete Template
+                  </button>
+                `
+                : ""
+            }
+
+            <div class="form-actions-right">
+
+              <button
+                type="button"
+                class="secondary"
+                onclick="
+                  screen='list';
+                  render();
+                ">
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                class="primary">
+                ${
+                  editIndex >= 0
+                    ? "Save Changes"
+                    : "Save Template"
+                }
+              </button>
+
+            </div>
+
+          </div>
+
+        </form>
+        `;
+
+      document.getElementById(
+        "category"
+      ).value = existing.category;
+    }
+
+    function itemRow(value,index){
+
+      return `
+        <div class="item">
+
+          <span class="grip">
+            ⋮⋮
+          </span>
+
+          <input
+            class="item-input"
+            value="${esc(value)}"
+            placeholder="Checklist item"
+          >
+
+          <button
+            type="button"
+            class="trash"
+            onclick="
+              this.parentElement.remove();
+            ">
+            🗑
+          </button>
+
+        </div>
+      `;
+    }
+
+    function addItem(){
+
+      const container =
+        document.getElementById("items");
+
+      container.insertAdjacentHTML(
+        "beforeend",
+        itemRow("",Date.now())
+      );
+
+      const inputs =
+        document.querySelectorAll(
+          ".item-input"
+        );
+
+      if(inputs.length){
+        inputs[inputs.length - 1].focus();
+      }
+    }
+
+    function saveForm(event){
+
+      event.preventDefault();
+
+      const name =
+        document
+          .getElementById("name")
+          .value
+          .trim();
+
+      const description =
+        document
+          .getElementById("description")
+          .value
+          .trim();
+
+      const category =
+        document
+          .getElementById("category")
+          .value;
+
+      const items =
+        [...document.querySelectorAll(".item-input")]
+          .map(input => input.value.trim())
+          .filter(Boolean);
+
+      if(!name){
+        alert("Please enter a template name.");
+        return;
+      }
+
+      if(!items.length){
+        alert("Please add at least one checklist item.");
+        return;
+      }
+
+      if(editIndex >= 0){
+
+        mine[editIndex] = {
+          ...mine[editIndex],
+          name,
+          description,
+          category,
+          items
+        };
+
+      }
+      else{
+
+        mine.unshift({
+          id:crypto.randomUUID(),
+          name,
+          description,
+          category,
+          icon:"▤",
+          items
+        });
+
+      }
+
+      save();
+
+      screen = "created";
+
+      render();
+    }
+
+    function deleteCurrentTemplate(){
+
+      if(editIndex < 0) return;
+
+      const template =
+        mine[editIndex];
+
+      if(
+        !confirm(
+          `Delete "${template.name}"?`
+        )
+      ){
+        return;
+      }
+
+      mine.splice(editIndex,1);
+
+      save();
+
+      editIndex = -1;
+
+      screen = "list";
+
+      render();
+    }
+
+    /* ============================================================
+       DUPLICATE / DELETE
+    ============================================================ */
+
+    function duplicateById(id){
+
+      const template =
+        mine.find(x => x.id === id);
+
+      if(!template) return;
+
+      mine.unshift({
+        ...template,
+        id:crypto.randomUUID(),
+        name:template.name + " Copy",
+        items:[...template.items]
+      });
+
+      save();
+
+      render();
+    }
+
+    function deleteById(id){
+
+      const template =
+        mine.find(x => x.id === id);
+
+      if(!template) return;
+
+      if(
+        !confirm(
+          `Delete "${template.name}"?`
+        )
+      ){
+        return;
+      }
+
+      mine =
+        mine.filter(
+          x => x.id !== id
+        );
+
+      save();
+
+      render();
+    }
+
+    /* ============================================================
+       CREATED
+    ============================================================ */
+
+    function created(){
+
+      app.innerHTML = `
+
+        <div class="success">
+
+          <div class="check">
+            ✓
+          </div>
+
+          <h2>
+            Template Created
+          </h2>
+
+          <p>
+            Your checklist template has been
+            added to your template library.
+          </p>
+
+          <div class="success-actions">
+
+            <button
+              class="secondary"
+              onclick="
+                newTemplate();
+              ">
+              Create Another
+            </button>
+
+            <button
+              class="primary"
+              onclick="
+                screen='list';
+                render();
+              ">
+              View Templates
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    /* ============================================================
+       PICKER
+    ============================================================ */
+
+    function picker(){
+
+      const allTemplates =
+        [...mine,...starter];
+
+      const categories = [
+        "All",
+        ...new Set(
+          allTemplates.map(
+            x => x.category
+          )
+        )
+      ];
+
+      pickerTemplates =
+        allTemplates.filter(template => {
+
+          const text = [
+            template.name,
+            template.description || "",
+            template.category
+          ]
+          .join(" ")
+          .toLowerCase();
+
+          return (
+            (cat === "All" ||
+              template.category === cat)
+            &&
+            text.includes(
+              query.toLowerCase()
+            )
+          );
+        });
+
+      app.innerHTML =
+        header(
+          "Add Checklist from Template"
+        ) +
+        `
+
+        <main class="content">
+
+          <input
+            class="search"
+            value="${esc(query)}"
+            placeholder="⌕  Search templates..."
+            oninput="
+              query=this.value;
+              render();
+            "
+          >
+
+          <div class="category-tabs">
+
+            ${
+              categories.map(category => `
+
+                <button
+                  class="${cat === category ? "active" : ""}"
+                  onclick="
+                    cat='${esc(category)}';
+                    render();
+                  ">
+                  ${esc(category)}
+                </button>
+
+              `).join("")
+            }
+
+          </div>
+
+          ${
+            pickerTemplates.map(
+              (template,index) => `
+
+                <div class="pick">
+
+                  <span class="doc">
+                    ${template.icon || "▤"}
+                  </span>
+
+                  <div class="pick-name">
+
+                    <strong>
+                      ${esc(template.name)}
+                    </strong>
+
+                    ${
+                      template.description
+                        ? `
+                          <small>
+                            ${esc(template.description)}
+                          </small>
+                        `
+                        : ""
+                    }
+
+                  </div>
+
+                  <span class="count">
+                    ${template.items.length} items
+                  </span>
+
+                  <button
+                    onclick="
+                      selectTemplate(${index});
+                    ">
+                    Use
+                  </button>
+
+                </div>
+
+              `
+            ).join("")
+          }
+
+          ${
+            pickerTemplates.length === 0
+              ? `
+                <div class="empty">
+                  No templates found.
+                </div>
+              `
+              : ""
+          }
+
+        </main>
+
+        `;
+    }
+
+    function selectTemplate(index){
+
+      selected =
+        pickerTemplates[index];
+
+      if(!selected) return;
+
+      screen = "preview";
+
+      render();
+    }
+
+    /* ============================================================
+       PREVIEW
+    ============================================================ */
+
+    function preview(){
+
+      if(!selected){
+        screen = "picker";
+        render();
+        return;
+      }
+
+      app.innerHTML =
+        header("Template Preview") +
+        `
+
+        <main class="preview">
+
+          <div class="preview-head">
+
+            <div class="preview-icon">
+              ${selected.icon || "▤"}
+            </div>
+
+            <div>
+
+              <strong>
+                ${esc(selected.name)}
+              </strong>
+
+              <small>
+                ${esc(selected.category)}
+                ·
+                ${selected.items.length} items
+              </small>
+
+            </div>
+
+          </div>
+
+          ${
+            selected.items.map(item => `
+
+              <div class="preview-item">
+
+                <input
+                  type="checkbox"
+                  disabled
+                >
+
+                <span>
+                  ${esc(item)}
+                </span>
+
+              </div>
+
+            `).join("")
+          }
+
+          <div class="preview-actions">
+
+            <button
+              class="secondary"
+              onclick="
+                screen='picker';
+                render();
+              ">
+              Back
+            </button>
+
+            <button
+              class="primary"
+              onclick="
+                addSelectedToCard();
+              ">
+              Add to Card
+            </button>
+
+          </div>
+
+        </main>
+
+        `;
+    }
+
+    function previewById(id){
+
+      selected =
+        [...mine,...starter]
+          .find(x => x.id === id);
+
+      if(!selected) return;
+
+      screen = "preview";
+
+      render();
+    }
+
+    /* ============================================================
+       ADD TO CARD
+    ============================================================ */
+
+    function addById(id){
+
+      selected =
+        [...mine,...starter]
+          .find(x => x.id === id);
+
+      if(!selected) return;
+
+      sendAdded();
+
+      screen = "added";
+
+      render();
+    }
+
+    function addSelectedToCard(){
+
+      if(!selected) return;
+
+      sendAdded();
+
+      screen = "added";
+
+      render();
+    }
+
+    function sendAdded(){
+
+      if(
+        window.parent &&
+        window.parent !== window
+      ){
+
+        window.parent.postMessage(
+          {
+            type:"rcl:checklist-added",
+            template:selected
+          },
+          "*"
+        );
+
+      }
+    }
+
+    /* ============================================================
+       ADDED
+    ============================================================ */
+
+    function added(){
+
+      app.innerHTML = `
+
+        <div class="success">
+
+          <div class="check">
+            ✓
+          </div>
+
+          <h2>
+            Checklist Added
+          </h2>
+
+          <p>
+            ${esc(selected?.name || "Checklist")}
+            has been added to this card.
+          </p>
+
+          <div class="success-actions">
+
+            <button
+              class="primary"
+              onclick="
+                screen='list';
+                render();
+              ">
+              Done
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    /* ============================================================
+       START
+    ============================================================ */
+
+    render();
+  </script>
+</body>
+</html>

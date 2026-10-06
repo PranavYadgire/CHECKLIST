@@ -1,0 +1,16 @@
+{
+  "name": "Reusable Checklist Library",
+  "details": "Reusable Checklist Library Power-Up for Trello - Analytics, tracking, and board intelligence.",
+  "icon": {
+    "url": "./icons/icon.svg"
+  },
+  "author": "Reusable Checklist Library Team",
+  "capabilities": [
+    "authorization-status",
+    "show-authorization",
+    "board-buttons",
+    "show-settings"
+  ],
+  "connectorName": "Reusable Checklist Library",
+  "tags": ["analytics", "productivity", "reusable-checklist-librarys", "reporting"]
+}
