@@ -2,31 +2,14 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Checklist Templates</title>
 
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
 
   <style>
-
-    :root {
-      --blue: #0c66e4;
-      --blue-soft: #e9f2ff;
-      --text: #172b4d;
-      --muted: #626f86;
-      --line: #dfe1e6;
-      --bg: #f7f8f9;
-      --danger: #c9372c;
-      --green: #22a06b;
-    }
-
     * {
       box-sizing: border-box;
     }
@@ -34,7 +17,9 @@
     html,
     body {
       margin: 0;
-      min-height: 100%;
+      padding: 0;
+      background: #ffffff;
+      color: #172b4d;
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -42,15 +27,13 @@
         Roboto,
         Arial,
         sans-serif;
-      color: var(--text);
-      background: #fff;
       font-size: 13px;
     }
 
     button,
     input,
     select {
-      font: inherit;
+      font-family: inherit;
     }
 
     button {
@@ -59,101 +42,115 @@
 
     #app {
       width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
-      background: #fff;
       min-height: 100vh;
+      background: #ffffff;
     }
 
     .header {
-      height: 54px;
-      padding: 0 16px;
+      height: 52px;
+      padding: 0 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--line);
-      background: #fff;
+      border-bottom: 1px solid #dfe1e6;
+      background: #ffffff;
     }
 
     .header h1 {
       margin: 0;
       font-size: 16px;
       font-weight: 700;
+      color: #172b4d;
     }
 
     .close {
       border: 0;
       background: transparent;
-      color: #44546f;
+      color: #5e6c84;
       font-size: 22px;
-      line-height: 1;
-      padding: 3px 5px;
+      padding: 3px 6px;
+      border-radius: 5px;
+    }
+
+    .close:hover {
+      background: #f1f2f4;
     }
 
     .content {
-      padding: 11px 14px 15px;
+      padding: 12px 14px;
     }
 
     .search {
       width: 100%;
-      height: 36px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
+      height: 37px;
+      border: 1px solid #b6c2cf;
+      border-radius: 6px;
       padding: 0 11px;
       outline: none;
+      color: #172b4d;
+      background: #fff;
     }
 
     .search:focus,
     .field input:focus,
     .field select:focus,
-    .item-input:focus {
-      border-color: var(--blue);
-      box-shadow:
-        0 0 0 1px var(--blue);
+    .item input:focus {
+      border-color: #0c66e4;
+      box-shadow: 0 0 0 1px #0c66e4;
     }
 
     .tabs {
       display: flex;
-      border-bottom: 1px solid var(--line);
-      margin-top: 8px;
+      margin-top: 9px;
+      border-bottom: 1px solid #dfe1e6;
     }
 
     .tab {
       flex: 1;
       border: 0;
       background: #fff;
-      color: #44546f;
-      padding: 9px 5px 8px;
+      color: #5e6c84;
+      padding: 9px 5px;
+      font-weight: 500;
+    }
+
+    .tab:hover {
+      background: #f7f8f9;
     }
 
     .tab.active {
-      color: var(--blue);
-      font-weight: 600;
-      border-bottom: 2px solid var(--blue);
+      color: #0c66e4;
+      font-weight: 700;
+      border-bottom: 2px solid #0c66e4;
     }
 
     .create {
       width: 100%;
+      margin: 10px 0 12px;
       border: 0;
       border-radius: 6px;
-      background: var(--blue-soft);
-      color: var(--blue);
-      font-weight: 600;
+      background: #e9f2ff;
+      color: #0c66e4;
       padding: 10px;
-      margin: 9px 0 11px;
+      font-weight: 700;
+    }
+
+    .create:hover {
+      background: #dbeafe;
     }
 
     .category {
+      margin: 13px 2px 6px;
       font-size: 12px;
       font-weight: 700;
-      margin: 12px 2px 6px;
+      color: #5e6c84;
     }
 
     .template {
-      min-height: 46px;
       display: flex;
       align-items: center;
       gap: 8px;
+      min-height: 48px;
       padding: 7px 4px;
       border-bottom: 1px solid #f1f2f4;
       border-radius: 6px;
@@ -164,14 +161,13 @@
     }
 
     .doc {
-      width: 30px;
-      height: 30px;
-      flex: none;
+      width: 31px;
+      height: 31px;
+      flex: 0 0 31px;
       border-radius: 8px;
       background: #f1f2f4;
       display: grid;
       place-items: center;
-      color: #44546f;
       font-size: 16px;
     }
 
@@ -182,113 +178,125 @@
 
     .template-name {
       display: block;
+      font-weight: 700;
+      color: #172b4d;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: 600;
-      font-size: 13px;
     }
 
     .template-description {
       display: block;
-      color: var(--muted);
-      font-size: 11px;
       margin-top: 2px;
+      color: #6b778c;
+      font-size: 11px;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .count {
+      color: #6b778c;
       font-size: 11px;
-      color: var(--muted);
       white-space: nowrap;
     }
 
     .more {
       border: 0;
       background: transparent;
-      color: #44546f;
-      padding: 4px 5px;
-      font-size: 16px;
+      color: #5e6c84;
+      padding: 5px 6px;
+      font-size: 15px;
+      border-radius: 5px;
+    }
+
+    .more:hover {
+      background: #dfe1e6;
+    }
+
+    .empty {
+      text-align: center;
+      color: #6b778c;
+      padding: 30px 10px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 14px 14px;
+      border-top: 1px solid #f1f2f4;
+    }
+
+    .primary,
+    .secondary,
+    .danger {
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-weight: 700;
+      border: 0;
+    }
+
+    .primary {
+      background: #0c66e4;
+      color: #ffffff;
+    }
+
+    .primary:hover {
+      background: #0055cc;
+    }
+
+    .secondary {
+      background: #f1f2f4;
+      color: #172b4d;
+    }
+
+    .secondary:hover {
+      background: #dfe1e6;
+    }
+
+    .danger {
+      color: #c9372c;
+      background: #fff;
+      border: 1px solid #ffbdad;
+    }
+
+    .danger:hover {
+      background: #ffebe6;
     }
 
     .menu {
       position: fixed;
-      z-index: 30;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow:
-        0 5px 16px rgba(9,30,66,.18);
-      border-radius: 6px;
+      z-index: 100;
       width: 155px;
       padding: 4px;
+      background: #ffffff;
+      border: 1px solid #dfe1e6;
+      border-radius: 6px;
+      box-shadow: 0 8px 22px rgba(9, 30, 66, 0.2);
     }
 
     .menu button {
+      display: block;
       width: 100%;
-      text-align: left;
       border: 0;
       background: #fff;
+      color: #172b4d;
+      text-align: left;
       padding: 8px 9px;
       border-radius: 4px;
-      color: var(--text);
     }
 
     .menu button:hover {
       background: #f1f2f4;
     }
 
-    .menu .danger {
-      color: var(--danger);
-    }
-
-    .footer {
-      padding: 10px 14px 15px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      border-top: 1px solid #f1f2f4;
-    }
-
-    .primary,
-    .secondary,
-    .danger-btn {
-      border: 0;
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-weight: 600;
-    }
-
-    .primary {
-      background: var(--blue);
-      color: #fff;
-    }
-
-    .primary:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
-
-    .secondary {
-      background: #f1f2f4;
-      color: var(--text);
-    }
-
-    .danger-btn {
-      background: #fff;
-      color: var(--danger);
-      border: 1px solid #ffbdad;
-    }
-
-    .empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 28px 8px;
+    .menu .delete-option {
+      color: #c9372c;
     }
 
     .form {
-      padding: 15px 16px;
+      padding: 15px 15px 4px;
     }
 
     .field {
@@ -297,8 +305,8 @@
 
     .field label {
       display: block;
-      font-weight: 700;
       margin-bottom: 6px;
+      font-weight: 700;
     }
 
     .field input,
@@ -307,10 +315,10 @@
       height: 36px;
       border: 1px solid #b6c2cf;
       border-radius: 6px;
-      padding: 0 10px;
-      background: #fff;
-      color: var(--text);
+      padding: 0 9px;
       outline: none;
+      background: #fff;
+      color: #172b4d;
     }
 
     .items-label {
@@ -336,111 +344,68 @@
       text-align: center;
     }
 
-    .item-input {
+    .item input {
       flex: 1;
       min-width: 0;
       height: 32px;
-      border: 1px solid var(--line);
+      border: 1px solid #dfe1e6;
       border-radius: 5px;
-      padding: 0 9px;
+      padding: 0 8px;
       outline: none;
     }
 
     .trash {
       border: 0;
-      background: #fff;
-      color: #626f86;
-      padding: 4px;
+      background: transparent;
+      color: #6b778c;
+      font-size: 16px;
+      padding: 4px 6px;
+    }
+
+    .trash:hover {
+      color: #c9372c;
     }
 
     .add-item {
-      border: 0;
-      background: #f1f2f4;
-      color: var(--text);
-      border-radius: 5px;
-      padding: 7px 10px;
       margin-top: 8px;
+      border: 0;
+      border-radius: 5px;
+      background: #f1f2f4;
+      color: #172b4d;
+      padding: 7px 10px;
+      font-weight: 600;
     }
 
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      border-top: 1px solid #f1f2f4;
-      margin-top: 16px;
-      padding-top: 12px;
-    }
-
-    .success {
-      text-align: center;
-      padding: 25px 20px 21px;
-    }
-
-    .check {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--green);
-      color: #fff;
-      font-size: 25px;
-      margin: 0 auto 12px;
-    }
-
-    .success h2 {
-      font-size: 17px;
-      margin: 0 0 5px;
-    }
-
-    .success p {
-      color: var(--muted);
-      line-height: 1.45;
-      margin: 0;
-    }
-
-    .success-actions {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 18px;
+    .form-footer {
+      margin-top: 12px;
     }
 
     .preview {
-      padding: 15px 16px;
+      padding: 15px;
     }
 
-    .preview-head {
+    .preview-title {
       display: flex;
-      gap: 10px;
       align-items: center;
+      gap: 10px;
       margin-bottom: 13px;
     }
 
-    .preview-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      background: #f1f2f4;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-    }
-
-    .preview-head strong {
+    .preview-title strong {
       display: block;
-      font-size: 15px;
+      margin-bottom: 3px;
     }
 
-    .preview-head small {
-      color: var(--muted);
+    .muted {
+      color: #6b778c;
+      line-height: 1.4;
     }
 
     .preview-item {
       display: flex;
       align-items: center;
       gap: 9px;
-      border: 1px solid var(--line);
+      border: 1px solid #dfe1e6;
       border-radius: 6px;
       padding: 8px;
       margin-bottom: 6px;
@@ -451,134 +416,154 @@
       height: 15px;
     }
 
-    .preview-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      border-top: 1px solid #f1f2f4;
-      margin-top: 14px;
-      padding-top: 12px;
-    }
-
     .category-tabs {
       display: flex;
       overflow-x: auto;
-      border-bottom: 1px solid var(--line);
-      margin: 8px 0 9px;
+      white-space: nowrap;
+      border-bottom: 1px solid #dfe1e6;
+      margin: 9px 0;
     }
 
     .category-tabs button {
       border: 0;
       background: #fff;
-      color: #44546f;
-      padding: 8px;
-      white-space: nowrap;
+      color: #5e6c84;
+      padding: 8px 7px;
     }
 
     .category-tabs button.active {
-      color: var(--blue);
-      border-bottom: 2px solid var(--blue);
+      color: #0c66e4;
+      font-weight: 700;
+      border-bottom: 2px solid #0c66e4;
     }
 
     .pick {
       display: flex;
       align-items: center;
       gap: 8px;
-      min-height: 44px;
-      padding: 6px 3px;
+      min-height: 48px;
+      padding: 7px 4px;
       border-bottom: 1px solid #f1f2f4;
     }
 
     .pick-name {
       flex: 1;
       min-width: 0;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .pick-name small {
       display: block;
-      color: var(--muted);
       font-weight: 400;
       margin-top: 2px;
     }
 
-    .pick button {
+    .use-button {
       border: 0;
-      background: var(--blue-soft);
-      color: var(--blue);
       border-radius: 5px;
+      background: #e9f2ff;
+      color: #0c66e4;
       padding: 6px 10px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .error-box {
-      margin: 12px 14px;
+    .use-button:hover {
+      background: #dbeafe;
+    }
+
+    .success {
+      padding: 28px 18px 22px;
+      text-align: center;
+    }
+
+    .checkmark {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: #22a06b;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+    }
+
+    .success h2 {
+      margin: 0 0 7px;
+      font-size: 18px;
+    }
+
+    .success-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .error {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 200;
       padding: 10px 12px;
-      border-radius: 6px;
       background: #ffebe6;
       color: #ae2e24;
+      border-radius: 6px;
+      box-shadow: 0 5px 15px rgba(9, 30, 66, .18);
       font-size: 12px;
-      line-height: 1.4;
     }
 
     .loading {
       text-align: center;
-      padding: 30px;
-      color: var(--muted);
+      padding: 35px 15px;
+      color: #6b778c;
     }
-
-    @media (min-width: 700px) {
-      body {
-        background: #f1f2f4;
-        padding: 20px 0;
-      }
-
-      #app {
-        border-radius: 8px;
-        box-shadow:
-          0 4px 18px rgba(9,30,66,.16);
-        min-height: 0;
-        overflow: hidden;
-      }
-    }
-
   </style>
-
 </head>
 
 <body>
 
 <div id="app"></div>
 
-<script type="module">
+<script>
+/*
+==========================================================
+ REUSABLE CHECKLIST LIBRARY
+ IMPORTANT:
+ This file intentionally uses a NORMAL script.
+ All button functions are exposed on window so that
+ onclick="..." works correctly.
+==========================================================
+*/
 
-import {
-  addTemplateToCard,
-  getCurrentCardId,
-} from "/src/lib/checklistTrello.js";
 
-
-/* --------------------------------------------------
+/* -------------------------------------------------------
    Trello iframe
--------------------------------------------------- */
+------------------------------------------------------- */
 
-const t =
-  TrelloPowerUp.iframe();
+var trello = null;
+
+try {
+  trello = window.TrelloPowerUp.iframe();
+} catch (error) {
+  console.error("Trello iframe initialization failed:", error);
+}
 
 
-/* --------------------------------------------------
+/* -------------------------------------------------------
    Starter Templates
--------------------------------------------------- */
+------------------------------------------------------- */
 
-const starter = [
+var starterTemplates = [
 
   {
     id: "starter-project-kickoff",
     name: "Project Kickoff",
-    description:
-      "Get started with a new project",
+    description: "Get started with a new project",
     category: "Project",
     icon: "🚀",
+    starter: true,
     items: [
       "Define project goals",
       "Identify stakeholders",
@@ -593,10 +578,10 @@ const starter = [
   {
     id: "starter-task-completion",
     name: "Task Completion",
-    description:
-      "Ensure all key steps are done",
+    description: "Ensure all key steps are done",
     category: "Tasks",
     icon: "✅",
+    starter: true,
     items: [
       "Review task requirements",
       "Complete development",
@@ -610,10 +595,10 @@ const starter = [
   {
     id: "starter-qa-review",
     name: "QA & Review",
-    description:
-      "Review and verify the work",
+    description: "Review and verify the work",
     category: "QA & Testing",
     icon: "🔍",
+    starter: true,
     items: [
       "Review requirements",
       "Test functionality",
@@ -627,10 +612,10 @@ const starter = [
   {
     id: "starter-client-onboarding",
     name: "Client Onboarding",
-    description:
-      "Set up and onboard a new client",
+    description: "Set up and onboard a new client",
     category: "Onboarding",
     icon: "👥",
+    starter: true,
     items: [
       "Create client profile",
       "Send welcome email",
@@ -645,10 +630,10 @@ const starter = [
   {
     id: "starter-feature-launch",
     name: "Project / Feature Launch",
-    description:
-      "Complete pre-launch checklist",
+    description: "Complete pre-launch checklist",
     category: "Product Launch",
     icon: "🎯",
+    starter: true,
     items: [
       "Finalize feature",
       "Complete QA",
@@ -664,68 +649,59 @@ const starter = [
 ];
 
 
-/* --------------------------------------------------
+/* -------------------------------------------------------
    My Templates
--------------------------------------------------- */
+------------------------------------------------------- */
 
-let mine = [];
+var myTemplates = [];
 
 try {
 
-  const saved =
+  var saved =
     JSON.parse(
-      localStorage.getItem(
-        "rcl_mine"
-      ) || "[]"
+      localStorage.getItem("rcl_mine") || "[]"
     );
 
   if (Array.isArray(saved)) {
-    mine = saved;
+    myTemplates = saved;
   }
 
 } catch (error) {
 
   console.error(
-    "Could not load saved templates",
+    "Could not load my templates:",
     error
   );
 
 }
 
 
-/* Backward compatibility */
+/* -------------------------------------------------------
+   Backward compatibility
+------------------------------------------------------- */
 
-if (!mine.length) {
+if (!myTemplates.length) {
 
   try {
 
-    const old =
+    var oldSaved =
       JSON.parse(
-        localStorage.getItem(
-          "rcl_templates"
-        ) || "[]"
+        localStorage.getItem("rcl_templates") || "[]"
       );
 
-    if (Array.isArray(old)) {
+    if (Array.isArray(oldSaved)) {
 
-      mine =
-        old
-          .filter(
-            item => !item.starter
-          )
-          .map(item => ({
-            ...item,
-            id:
-              item.id ||
-              crypto.randomUUID()
-          }));
+      myTemplates =
+        oldSaved.filter(function(item) {
+          return !item.starter;
+        });
 
     }
 
   } catch (error) {
 
     console.error(
-      "Could not migrate templates",
+      "Could not migrate old templates:",
       error
     );
 
@@ -734,70 +710,81 @@ if (!mine.length) {
 }
 
 
-/* --------------------------------------------------
+/* -------------------------------------------------------
    State
--------------------------------------------------- */
+------------------------------------------------------- */
 
-let screen = "list";
+var currentScreen = "list";
 
-let tab = "mine";
+var currentTab = "mine";
 
-let search = "";
+var currentSearch = "";
 
-let category = "All";
+var currentCategory = "All";
 
-let selected = null;
+var selectedTemplate = null;
 
-let editingId = null;
+var editingId = null;
 
-let busy = false;
-
-const app =
-  document.getElementById(
-    "app"
-  );
+var app =
+  document.getElementById("app");
 
 
-/* --------------------------------------------------
-   Helpers
--------------------------------------------------- */
+/* -------------------------------------------------------
+   Utility
+------------------------------------------------------- */
 
-function esc(value) {
+function escapeHtml(value) {
 
-  return String(
-    value ?? ""
-  ).replace(
-    /[&<>"']/g,
-    char =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      }[char])
-  );
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
 
-function saveMine() {
+function saveMyTemplates() {
 
   localStorage.setItem(
     "rcl_mine",
-    JSON.stringify(mine)
+    JSON.stringify(myTemplates)
   );
 
 }
 
 
-function closeMenu() {
+function closeMenus() {
 
-  document
-    .querySelectorAll(".menu")
-    .forEach(
-      menu => menu.remove()
-    );
+  var menus =
+    document.querySelectorAll(".menu");
+
+  menus.forEach(function(menu) {
+    menu.remove();
+  });
+
+}
+
+
+function getAllTemplates() {
+
+  return myTemplates.concat(
+    starterTemplates
+  );
+
+}
+
+
+function findTemplateById(id) {
+
+  var all =
+    getAllTemplates();
+
+  return all.find(function(template) {
+    return template.id === id;
+  });
 
 }
 
@@ -805,150 +792,141 @@ function closeMenu() {
 function header(title) {
 
   return `
-    <header class="header">
+    <div class="header">
 
-      <h1>${esc(title)}</h1>
+      <h1>
+        ${escapeHtml(title)}
+      </h1>
 
       <button
         class="close"
-        onclick="go('list')"
-        aria-label="Close"
+        onclick="goToList()"
       >
         ×
       </button>
 
-    </header>
+    </div>
   `;
 
 }
 
 
-function go(next) {
+/* -------------------------------------------------------
+   Navigation
+------------------------------------------------------- */
 
-  closeMenu();
+function goToList() {
 
-  screen = next;
+  closeMenus();
+
+  currentScreen = "list";
+
+  currentSearch = "";
+
+  currentCategory = "All";
 
   render();
 
 }
 
 
-function allTemplates() {
-
-  return [
-    ...mine,
-    ...starter
-  ];
-
-}
-
-
-function currentTemplates() {
-
-  if (tab === "starter") {
-
-    return starter.filter(
-      item =>
-        (
-          item.name +
-          " " +
-          item.description +
-          " " +
-          item.category
-        )
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          )
-    );
-
-  }
-
-  return mine.filter(
-    item =>
-      (
-        item.name +
-        " " +
-        (item.description || "") +
-        " " +
-        item.category
-      )
-        .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-  );
-
-}
-
-
-/* --------------------------------------------------
-   Render
--------------------------------------------------- */
-
 function render() {
 
-  closeMenu();
+  closeMenus();
 
-  if (screen === "list")
+  if (currentScreen === "list") {
     renderList();
+    return;
+  }
 
-  if (screen === "picker")
-    renderPicker();
-
-  if (screen === "preview")
-    renderPreview();
-
-  if (screen === "form")
+  if (currentScreen === "form") {
     renderForm();
+    return;
+  }
 
-  if (screen === "success")
+  if (currentScreen === "picker") {
+    renderPicker();
+    return;
+  }
+
+  if (currentScreen === "preview") {
+    renderPreview();
+    return;
+  }
+
+  if (currentScreen === "success") {
     renderSuccess();
+    return;
+  }
+
+  renderList();
 
 }
 
+
+/* -------------------------------------------------------
+   LIST
+------------------------------------------------------- */
 
 function renderList() {
 
-  const templates =
-    currentTemplates();
+  var templates =
+    currentTab === "mine"
+      ? myTemplates
+      : starterTemplates;
 
-  const groups = {};
 
-  templates.forEach(
-    template => {
+  var filtered =
+    templates.filter(function(template) {
 
-      if (!groups[
-        template.category
-      ]) {
-        groups[
-          template.category
-        ] = [];
-      }
+      var text =
+        (
+          template.name +
+          " " +
+          template.category +
+          " " +
+          (template.description || "")
+        ).toLowerCase();
 
-      groups[
-        template.category
-      ].push(template);
+      return text.includes(
+        currentSearch.toLowerCase()
+      );
 
+    });
+
+
+  var groups = {};
+
+
+  filtered.forEach(function(template) {
+
+    if (!groups[template.category]) {
+      groups[template.category] = [];
     }
+
+    groups[template.category].push(
+      template
+    );
+
+  });
+
+
+  var html = "";
+
+  html += header(
+    "Checklist Templates"
   );
 
 
-  app.innerHTML = `
-
-    ${header(
-      "Checklist Templates"
-    )}
-
-    <main class="content">
+  html += `
+    <div class="content">
 
       <input
         class="search"
         placeholder="⌕  Search templates..."
-        value="${esc(search)}"
+        value="${escapeHtml(currentSearch)}"
         oninput="
-          search=this.value;
+          currentSearch=this.value;
           render();
         "
       >
@@ -957,13 +935,13 @@ function renderList() {
 
         <button
           class="tab ${
-            tab === "mine"
+            currentTab === "mine"
               ? "active"
               : ""
           }"
           onclick="
-            tab='mine';
-            search='';
+            currentTab='mine';
+            currentSearch='';
             render();
           "
         >
@@ -972,13 +950,13 @@ function renderList() {
 
         <button
           class="tab ${
-            tab === "starter"
+            currentTab === "starter"
               ? "active"
               : ""
           }"
           onclick="
-            tab='starter';
-            search='';
+            currentTab='starter';
+            currentSearch='';
             render();
           "
         >
@@ -987,162 +965,214 @@ function renderList() {
 
       </div>
 
+
       <button
         class="create"
-        onclick="newTemplate()"
+        onclick="createNewTemplate()"
       >
         ＋ Create Template
       </button>
+  `;
 
-      ${
-        Object.entries(
-          groups
-        )
-        .map(
-          ([group, items]) => `
 
-            <div class="category">
-              ${esc(group)}
-            </div>
+  if (!filtered.length) {
 
-            ${items
-              .map(
-                item => `
+    html += `
+      <div class="empty">
+        ${
+          currentTab === "mine"
+            ? "No templates yet."
+            : "No starter templates found."
+        }
+      </div>
+    `;
 
-                  <div class="template">
+  } else {
 
-                    <span class="doc">
-                      ${item.icon || "▤"}
-                    </span>
+    Object.keys(groups)
+      .forEach(function(category) {
 
-                    <div class="template-info">
-
-                      <span class="template-name">
-                        ${esc(item.name)}
-                      </span>
-
-                      <span class="template-description">
-                        ${esc(
-                          item.description ||
-                          `${item.items.length} checklist items`
-                        )}
-                      </span>
-
-                    </div>
-
-                    <span class="count">
-                      ${item.items.length}
-                    </span>
-
-                    ${
-                      tab === "mine"
-                        ? `
-                          <button
-                            class="more"
-                            onclick="
-                              openMenu(
-                                event,
-                                '${item.id}'
-                              )
-                            "
-                          >
-                            ···
-                          </button>
-                        `
-                        : ""
-                    }
-
-                  </div>
-
-                `
-              )
-              .join("")
-            }
-
-          `
-        )
-        .join("")
-        ||
-        `
-          <div class="empty">
-            ${
-              tab === "mine"
-                ? "No templates yet."
-                : "No starter templates found."
-            }
+        html += `
+          <div class="category">
+            ${escapeHtml(category)}
           </div>
-        `
-      }
+        `;
 
-    </main>
+
+        groups[category]
+          .forEach(function(template) {
+
+            var index =
+              myTemplates.indexOf(
+                template
+              );
+
+
+            html += `
+              <div class="template">
+
+                <span class="doc">
+                  ${template.icon || "▤"}
+                </span>
+
+                <div class="template-info">
+
+                  <span class="template-name">
+                    ${escapeHtml(
+                      template.name
+                    )}
+                  </span>
+
+                  <span class="template-description">
+                    ${escapeHtml(
+                      template.description ||
+                      (
+                        template.items.length +
+                        " checklist items"
+                      )
+                    )}
+                  </span>
+
+                </div>
+
+                <span class="count">
+                  ${template.items.length}
+                </span>
+
+                ${
+                  currentTab === "mine"
+                    ? `
+                      <button
+                        class="more"
+                        onclick="
+                          openTemplateMenu(
+                            event,
+                            '${template.id}'
+                          )
+                        "
+                      >
+                        ···
+                      </button>
+                    `
+                    : ""
+                }
+
+              </div>
+            `;
+
+          });
+
+      });
+
+  }
+
+
+  html += `
+    </div>
 
     <div class="footer">
 
       <button
         class="primary"
-        onclick="
-          screen='picker';
-          search='';
-          category='All';
-          render();
-        "
+        onclick="openCardPicker()"
       >
         Add Checklist to Card
       </button>
 
     </div>
-
   `;
+
+
+  app.innerHTML = html;
 
 }
 
 
-/* --------------------------------------------------
-   Menu
--------------------------------------------------- */
+/* -------------------------------------------------------
+   CREATE TEMPLATE
+------------------------------------------------------- */
 
-function openMenu(
+function createNewTemplate() {
+
+  editingId = null;
+
+  selectedTemplate = {
+
+    id:
+      "template-" +
+      Date.now(),
+
+    name: "",
+
+    description: "",
+
+    category: "QA & Testing",
+
+    icon: "▤",
+
+    items: [""]
+
+  };
+
+
+  currentScreen = "form";
+
+  render();
+
+}
+
+
+/* -------------------------------------------------------
+   EDIT MENU
+------------------------------------------------------- */
+
+function openTemplateMenu(
   event,
   id
 ) {
 
   event.stopPropagation();
 
-  closeMenu();
+  closeMenus();
 
-  const template =
-    mine.find(
-      item =>
-        item.id === id
-    );
 
-  if (!template)
+  var template =
+    findTemplateById(id);
+
+  if (!template) {
     return;
+  }
 
-  const rect =
+
+  var rect =
     event.currentTarget
       .getBoundingClientRect();
 
-  const menu =
+
+  var menu =
     document.createElement(
       "div"
     );
 
-  menu.className = "menu";
+
+  menu.className =
+    "menu";
+
 
   menu.style.left =
     Math.max(
       8,
       Math.min(
-        rect.left - 120,
-        innerWidth - 160
+        rect.left - 115,
+        window.innerWidth - 163
       )
     ) + "px";
+
 
   menu.style.top =
     Math.min(
       rect.bottom + 4,
-      innerHeight - 190
+      window.innerHeight - 170
     ) + "px";
 
 
@@ -1150,15 +1180,21 @@ function openMenu(
 
     <button
       onclick="
-        previewById('${id}')
+        closeMenus();
+        openTemplatePreview(
+          '${id}'
+        )
       "
     >
-      ◉ View Details
+      ▤ View Details
     </button>
 
     <button
       onclick="
-        editById('${id}')
+        closeMenus();
+        editTemplate(
+          '${id}'
+        )
       "
     >
       ✎ Edit Template
@@ -1166,16 +1202,22 @@ function openMenu(
 
     <button
       onclick="
-        duplicateById('${id}')
+        closeMenus();
+        duplicateTemplate(
+          '${id}'
+        )
       "
     >
       ▣ Duplicate
     </button>
 
     <button
-      class="danger"
+      class="delete-option"
       onclick="
-        deleteById('${id}')
+        closeMenus();
+        deleteTemplate(
+          '${id}'
+        )
       "
     >
       Delete Template
@@ -1189,621 +1231,176 @@ function openMenu(
   );
 
 
-  setTimeout(
-    () =>
-      document.addEventListener(
-        "click",
-        closeMenu,
-        {
-          once: true
-        }
-      ),
-    0
-  );
+  setTimeout(function() {
 
-}
-
-
-/* --------------------------------------------------
-   Picker
--------------------------------------------------- */
-
-function renderPicker() {
-
-  const categories = [
-    "All",
-    ...new Set(
-      allTemplates()
-        .map(
-          item =>
-            item.category
-        )
-    )
-  ];
-
-
-  const shown =
-    allTemplates().filter(
-      item =>
-        (
-          category === "All" ||
-          item.category === category
-        ) &&
-        (
-          item.name +
-          " " +
-          (item.description || "")
-        )
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          )
-    );
-
-
-  app.innerHTML = `
-
-    ${header(
-      "Add Checklist from Template"
-    )}
-
-    <main class="content">
-
-      <input
-        class="search"
-        placeholder="⌕  Search templates..."
-        value="${esc(search)}"
-        oninput="
-          search=this.value;
-          render();
-        "
-      >
-
-      <div class="category-tabs">
-
-        ${
-          categories
-            .map(
-              cat => `
-
-                <button
-                  class="${
-                    category === cat
-                      ? "active"
-                      : ""
-                  }"
-                  onclick="
-                    category=${JSON.stringify(cat)};
-                    render();
-                  "
-                >
-                  ${esc(cat)}
-                </button>
-
-              `
-            )
-            .join("")
-        }
-
-      </div>
-
-
-      ${
-        shown
-          .map(
-            item => `
-
-              <div class="pick">
-
-                <span class="doc">
-                  ${item.icon || "▤"}
-                </span>
-
-                <span class="pick-name">
-
-                  ${esc(item.name)}
-
-                  <small>
-                    ${esc(
-                      item.description ||
-                      `${item.items.length} items`
-                    )}
-                  </small>
-
-                </span>
-
-                <button
-                  onclick="
-                    selectTemplate(
-                      '${item.id}'
-                    )
-                  "
-                >
-                  Use
-                </button>
-
-              </div>
-
-            `
-          )
-          .join("")
-        ||
-        `
-          <div class="empty">
-            No templates found.
-          </div>
-        `
+    document.addEventListener(
+      "click",
+      closeMenus,
+      {
+        once: true
       }
-
-    </main>
-
-  `;
-
-}
-
-
-/* --------------------------------------------------
-   Select Template
--------------------------------------------------- */
-
-function findTemplate(
-  id
-) {
-
-  return allTemplates()
-    .find(
-      item =>
-        item.id === id
     );
 
-}
-
-
-function selectTemplate(
-  id
-) {
-
-  selected =
-    findTemplate(id);
-
-  if (!selected)
-    return;
-
-  screen = "preview";
-
-  render();
+  }, 0);
 
 }
 
 
-/* --------------------------------------------------
-   Preview
--------------------------------------------------- */
+/* -------------------------------------------------------
+   EDIT
+------------------------------------------------------- */
 
-function renderPreview() {
+function editTemplate(id) {
 
-  if (!selected) {
-
-    go("picker");
-
-    return;
-
-  }
-
-
-  app.innerHTML = `
-
-    ${header(
-      "Template Preview"
-    )}
-
-    <main class="preview">
-
-      <div class="preview-head">
-
-        <div class="preview-icon">
-          ${selected.icon || "▤"}
-        </div>
-
-        <div>
-
-          <strong>
-            ${esc(selected.name)}
-          </strong>
-
-          <small>
-            ${esc(selected.category)}
-            ·
-            ${selected.items.length}
-            items
-          </small>
-
-        </div>
-
-      </div>
-
-
-      ${
-        selected.items
-          .map(
-            item => `
-
-              <div class="preview-item">
-
-                <input
-                  type="checkbox"
-                  disabled
-                >
-
-                <span>
-                  ${esc(item)}
-                </span>
-
-              </div>
-
-            `
-          )
-          .join("")
+  var template =
+    myTemplates.find(
+      function(item) {
+        return item.id === id;
       }
+    );
 
 
-      <div class="preview-actions">
-
-        <button
-          class="secondary"
-          onclick="
-            screen='picker';
-            render();
-          "
-        >
-          Back
-        </button>
-
-        <button
-          class="primary"
-          id="addToCardButton"
-          onclick="addSelectedTemplate()"
-        >
-          Add to Card
-        </button>
-
-      </div>
-
-    </main>
-
-  `;
-
-}
-
-
-/* --------------------------------------------------
-   REAL TRELLO ADD
--------------------------------------------------- */
-
-async function addSelectedTemplate() {
-
-  if (
-    busy ||
-    !selected
-  ) {
+  if (!template) {
     return;
   }
 
-  busy = true;
-
-
-  const button =
-    document.getElementById(
-      "addToCardButton"
-    );
-
-
-  if (button) {
-
-    button.disabled = true;
-
-    button.textContent =
-      "Adding to Trello...";
-
-  }
-
-
-  try {
-
-    /*
-     * Confirm we have the card
-     * context before making API call.
-     */
-
-    await getCurrentCardId(t);
-
-
-    /*
-     * This creates:
-     *
-     * 1. Real Trello checklist
-     * 2. All real checklist items
-     */
-
-    const result =
-      await addTemplateToCard(
-        t,
-        selected
-      );
-
-
-    console.log(
-      "Checklist successfully created:",
-      result
-    );
-
-
-    /*
-     * Tell the parent card section
-     * to update its local UI too.
-     */
-
-    if (
-      window.parent &&
-      window.parent !== window
-    ) {
-
-      window.parent.postMessage(
-        {
-          type:
-            "rcl:checklist-added",
-          template:
-            selected,
-          trelloChecklist:
-            result.checklist,
-          trelloItems:
-            result.items
-        },
-        "*"
-      );
-
-    }
-
-
-    screen = "success";
-
-    render();
-
-
-  } catch (error) {
-
-    console.error(
-      "ADD CHECKLIST ERROR:",
-      error
-    );
-
-
-    busy = false;
-
-
-    if (button) {
-
-      button.disabled = false;
-
-      button.textContent =
-        "Add to Card";
-
-    }
-
-
-    showError(
-      getReadableError(
-        error
-      )
-    );
-
-  }
-
-}
-
-
-/* --------------------------------------------------
-   Error Handling
--------------------------------------------------- */
-
-function getReadableError(
-  error
-) {
-
-  const message =
-    error?.message ||
-    String(error);
-
-
-  if (
-    message.includes(
-      "NOT_AUTHORIZED"
-    )
-  ) {
-
-    return `
-      Trello authorization is required.
-      Please authorize the Power-Up and try again.
-    `;
-
-  }
-
-
-  return `
-    Could not add the checklist to Trello.
-
-    ${message}
-  `;
-
-}
-
-
-function showError(
-  message
-) {
-
-  const existing =
-    document.querySelector(
-      ".error-box"
-    );
-
-  if (existing)
-    existing.remove();
-
-
-  const box =
-    document.createElement(
-      "div"
-    );
-
-  box.className =
-    "error-box";
-
-  box.textContent =
-    message;
-
-
-  document.body.appendChild(
-    box
-  );
-
-}
-
-
-/* --------------------------------------------------
-   Success
--------------------------------------------------- */
-
-function renderSuccess() {
-
-  app.innerHTML = `
-
-    <div class="success">
-
-      <div class="check">
-        ✓
-      </div>
-
-      <h2>
-        Checklist Added
-      </h2>
-
-      <p>
-        ${esc(selected.name)}
-        has been added
-        <br>
-        to this Trello card.
-      </p>
-
-      <div class="success-actions">
-
-        <button
-          class="secondary"
-          onclick="
-            screen='picker';
-            busy=false;
-            render();
-          "
-        >
-          Add Another
-        </button>
-
-        <button
-          class="primary"
-          onclick="
-            go('list');
-            busy=false;
-          "
-        >
-          Done
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* --------------------------------------------------
-   Create Template
--------------------------------------------------- */
-
-function newTemplate() {
-
-  editingId = null;
-
-  selected = {
-    id:
-      crypto.randomUUID(),
-    name: "",
-    description: "",
-    category:
-      "QA & Testing",
-    icon: "▤",
-    items: [""]
-  };
-
-  screen = "form";
-
-  render();
-
-}
-
-
-function editById(id) {
-
-  const template =
-    mine.find(
-      item =>
-        item.id === id
-    );
-
-  if (!template)
-    return;
 
   editingId = id;
 
-  selected =
+
+  selectedTemplate =
     JSON.parse(
       JSON.stringify(
         template
       )
     );
 
-  screen = "form";
+
+  currentScreen = "form";
 
   render();
 
 }
 
 
-/* --------------------------------------------------
-   Form
--------------------------------------------------- */
+/* -------------------------------------------------------
+   DUPLICATE
+------------------------------------------------------- */
+
+function duplicateTemplate(id) {
+
+  var template =
+    myTemplates.find(
+      function(item) {
+        return item.id === id;
+      }
+    );
+
+
+  if (!template) {
+    return;
+  }
+
+
+  var copy =
+    JSON.parse(
+      JSON.stringify(
+        template
+      )
+    );
+
+
+  copy.id =
+    "template-" +
+    Date.now();
+
+
+  copy.name =
+    template.name +
+    " Copy";
+
+
+  myTemplates.unshift(
+    copy
+  );
+
+
+  saveMyTemplates();
+
+  render();
+
+}
+
+
+/* -------------------------------------------------------
+   DELETE
+------------------------------------------------------- */
+
+function deleteTemplate(id) {
+
+  var template =
+    myTemplates.find(
+      function(item) {
+        return item.id === id;
+      }
+    );
+
+
+  if (!template) {
+    return;
+  }
+
+
+  var confirmed =
+    window.confirm(
+      'Delete "' +
+      template.name +
+      '"?'
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  myTemplates =
+    myTemplates.filter(
+      function(item) {
+        return item.id !== id;
+      }
+    );
+
+
+  saveMyTemplates();
+
+  render();
+
+}
+
+
+/* -------------------------------------------------------
+   FORM
+------------------------------------------------------- */
 
 function renderForm() {
 
-  const editing =
-    Boolean(editingId);
+  var editing =
+    editingId !== null;
 
 
-  app.innerHTML = `
+  var html = "";
 
-    ${header(
-      editing
-        ? "Edit Checklist Template"
-        : "Create Checklist Template"
-    )}
 
-    <form
-      class="form"
-      onsubmit="
-        saveTemplate(event)
-      "
-    >
+  html += header(
+    editing
+      ? "Edit Checklist Template"
+      : "Create Checklist Template"
+  );
+
+
+  html += `
+    <div class="form">
 
       <div class="field">
 
@@ -1813,11 +1410,10 @@ function renderForm() {
 
         <input
           id="templateName"
-          required
-          maxlength="80"
+          type="text"
           placeholder="Enter template name"
-          value="${esc(
-            selected.name
+          value="${escapeHtml(
+            selectedTemplate.name
           )}"
         >
 
@@ -1832,10 +1428,10 @@ function renderForm() {
 
         <input
           id="templateDescription"
-          maxlength="120"
+          type="text"
           placeholder="Short description"
-          value="${esc(
-            selected.description || ""
+          value="${escapeHtml(
+            selectedTemplate.description || ""
           )}"
         >
 
@@ -1850,14 +1446,37 @@ function renderForm() {
 
         <select id="templateCategory">
 
-          <option>Project</option>
-          <option>Tasks</option>
-          <option>QA & Testing</option>
-          <option>Onboarding</option>
-          <option>Product Launch</option>
-          <option>Marketing</option>
-          <option>Development</option>
-          <option>General</option>
+          <option value="Project">
+            Project
+          </option>
+
+          <option value="Tasks">
+            Tasks
+          </option>
+
+          <option value="QA & Testing">
+            QA & Testing
+          </option>
+
+          <option value="Onboarding">
+            Onboarding
+          </option>
+
+          <option value="Product Launch">
+            Product Launch
+          </option>
+
+          <option value="Development">
+            Development
+          </option>
+
+          <option value="Marketing">
+            Marketing
+          </option>
+
+          <option value="General">
+            General
+          </option>
 
         </select>
 
@@ -1873,248 +1492,258 @@ function renderForm() {
         class="items"
         id="items"
       >
+  `;
 
-        ${
-          selected.items
-            .map(
-              (item, index) =>
-                itemRow(
-                  item,
-                  index
+
+  selectedTemplate.items
+    .forEach(
+      function(item, index) {
+
+        html += `
+          <div class="item">
+
+            <span class="grip">
+              ⁝⁝
+            </span>
+
+            <input
+              type="text"
+              placeholder="Checklist item"
+              value="${escapeHtml(item)}"
+            >
+
+            <button
+              class="trash"
+              onclick="
+                removeChecklistItem(
+                  ${index}
                 )
-            )
-            .join("")
-        }
+              "
+            >
+              ×
+            </button>
+
+          </div>
+        `;
+
+      }
+    );
+
+
+  html += `
 
       </div>
 
 
       <button
-        type="button"
         class="add-item"
-        onclick="addItem()"
+        onclick="addChecklistItem()"
       >
         ＋ Add item
       </button>
 
+    </div>
 
-      <div class="form-actions">
 
+    <div class="footer form-footer">
+
+      ${
+        editing
+          ? `
+            <button
+              class="danger"
+              style="margin-right:auto"
+              onclick="
+                deleteTemplate(
+                  '${editingId}'
+                )
+              "
+            >
+              Delete Template
+            </button>
+          `
+          : ""
+      }
+
+
+      <button
+        class="secondary"
+        onclick="goToList()"
+      >
+        Cancel
+      </button>
+
+
+      <button
+        class="primary"
+        onclick="saveTemplate()"
+      >
         ${
           editing
-            ? `
-              <button
-                type="button"
-                class="danger-btn"
-                style="margin-right:auto"
-                onclick="
-                  deleteById(
-                    '${editingId}'
-                  )
-                "
-              >
-                Delete
-              </button>
-            `
-            : ""
+            ? "Save Changes"
+            : "Save Template"
         }
+      </button>
 
-
-        <button
-          type="button"
-          class="secondary"
-          onclick="
-            go('list')
-          "
-        >
-          Cancel
-        </button>
-
-
-        <button
-          type="submit"
-          class="primary"
-        >
-          ${
-            editing
-              ? "Save Changes"
-              : "Save Template"
-          }
-        </button>
-
-      </div>
-
-    </form>
-
+    </div>
   `;
+
+
+  app.innerHTML =
+    html;
 
 
   document.getElementById(
     "templateCategory"
   ).value =
-    selected.category;
+    selectedTemplate.category;
 
 }
 
 
-function itemRow(
-  value,
-  index
-) {
+/* -------------------------------------------------------
+   READ FORM ITEMS
+------------------------------------------------------- */
 
-  return `
+function readFormItems() {
 
-    <div class="item">
-
-      <span class="grip">
-        ⁝⁝
-      </span>
-
-      <input
-        class="item-input"
-        value="${esc(value)}"
-        placeholder="Checklist item"
-      >
-
-      <button
-        type="button"
-        class="trash"
-        onclick="
-          removeItem(
-            ${index}
-          )
-        "
-      >
-        ×
-      </button>
-
-    </div>
-
-  `;
-
-}
-
-
-function addItem() {
-
-  const values =
-    [
-      ...document.querySelectorAll(
-        ".item-input"
-      )
-    ].map(
-      input =>
-        input.value
+  var inputs =
+    document.querySelectorAll(
+      "#items input"
     );
 
 
-  selected.items =
-    values;
+  return Array
+    .from(inputs)
+    .map(function(input) {
+      return input.value;
+    });
 
-  selected.items.push(
+}
+
+
+/* -------------------------------------------------------
+   ADD ITEM
+------------------------------------------------------- */
+
+function addChecklistItem() {
+
+  selectedTemplate.items =
+    readFormItems();
+
+
+  selectedTemplate.items.push(
     ""
   );
+
 
   render();
 
 
-  const inputs =
-    document.querySelectorAll(
-      ".item-input"
-    );
+  setTimeout(function() {
 
-  inputs[
-    inputs.length - 1
-  ]?.focus();
+    var inputs =
+      document.querySelectorAll(
+        "#items input"
+      );
+
+
+    if (inputs.length) {
+
+      inputs[
+        inputs.length - 1
+      ].focus();
+
+    }
+
+  }, 0);
 
 }
 
 
-function removeItem(
+/* -------------------------------------------------------
+   REMOVE ITEM
+------------------------------------------------------- */
+
+function removeChecklistItem(
   index
 ) {
 
-  const values =
-    [
-      ...document.querySelectorAll(
-        ".item-input"
-      )
-    ].map(
-      input =>
-        input.value
-    );
+  selectedTemplate.items =
+    readFormItems();
 
 
-  values.splice(
+  selectedTemplate.items.splice(
     index,
     1
   );
 
 
-  if (!values.length) {
+  if (
+    selectedTemplate.items.length === 0
+  ) {
 
-    values.push("");
+    selectedTemplate.items.push(
+      ""
+    );
 
   }
 
-
-  selected.items =
-    values;
 
   render();
 
 }
 
 
-function saveTemplate(
-  event
-) {
+/* -------------------------------------------------------
+   SAVE TEMPLATE
+------------------------------------------------------- */
 
-  event.preventDefault();
+function saveTemplate() {
 
-
-  const name =
-    document
-      .getElementById(
-        "templateName"
-      )
-      .value
-      .trim();
+  var nameInput =
+    document.getElementById(
+      "templateName"
+    );
 
 
-  const description =
-    document
-      .getElementById(
-        "templateDescription"
-      )
-      .value
-      .trim();
+  var descriptionInput =
+    document.getElementById(
+      "templateDescription"
+    );
 
 
-  const category =
-    document
-      .getElementById(
-        "templateCategory"
-      )
-      .value;
+  var categoryInput =
+    document.getElementById(
+      "templateCategory"
+    );
 
 
-  const items =
-    [
-      ...document.querySelectorAll(
-        ".item-input"
-      )
-    ]
-      .map(
-        input =>
-          input.value.trim()
-      )
-      .filter(Boolean);
+  var name =
+    nameInput.value.trim();
+
+
+  var description =
+    descriptionInput.value.trim();
+
+
+  var category =
+    categoryInput.value;
+
+
+  var items =
+    readFormItems()
+      .map(function(item) {
+        return item.trim();
+      })
+      .filter(function(item) {
+        return item.length > 0;
+      });
 
 
   if (!name) {
 
-    alert(
+    window.alert(
       "Please enter a template name."
     );
 
@@ -2125,8 +1754,8 @@ function saveTemplate(
 
   if (!items.length) {
 
-    alert(
-      "Add at least one checklist item."
+    window.alert(
+      "Please add at least one checklist item."
     );
 
     return;
@@ -2134,150 +1763,662 @@ function saveTemplate(
   }
 
 
-  const template = {
+  var template = {
 
     id:
       editingId ||
-      crypto.randomUUID(),
+      (
+        "template-" +
+        Date.now()
+      ),
 
-    name,
+    name:
+      name,
 
-    description,
+    description:
+      description,
 
-    category,
+    category:
+      category,
 
     icon:
-      selected.icon ||
+      selectedTemplate.icon ||
       "▤",
 
-    items,
+    starter:
+      false,
+
+    items:
+      items
 
   };
 
 
-  if (editingId) {
+  if (editingId !== null) {
 
-    const index =
-      mine.findIndex(
-        item =>
-          item.id ===
-          editingId
+    var index =
+      myTemplates.findIndex(
+        function(item) {
+          return item.id === editingId;
+        }
       );
+
 
     if (index >= 0) {
 
-      mine[index] =
+      myTemplates[index] =
         template;
 
     }
 
   } else {
 
-    mine.unshift(
+    myTemplates.unshift(
       template
     );
 
   }
 
 
-  saveMine();
+  saveMyTemplates();
 
 
-  selected =
+  selectedTemplate =
     template;
 
-  screen = "success";
+
+  editingId = null;
+
+
+  currentScreen =
+    "success";
+
 
   render();
 
 }
 
 
-/* --------------------------------------------------
-   Duplicate
--------------------------------------------------- */
+/* -------------------------------------------------------
+   OPEN CARD PICKER
+------------------------------------------------------- */
 
-function duplicateById(
-  id
-) {
+function openCardPicker() {
 
-  const original =
-    mine.find(
-      item =>
-        item.id === id
-    );
+  currentSearch = "";
 
-  if (!original)
-    return;
+  currentCategory = "All";
 
+  currentScreen =
+    "picker";
 
-  const copy = {
+  render();
 
-    ...JSON.parse(
-      JSON.stringify(
-        original
-      )
-    ),
-
-    id:
-      crypto.randomUUID(),
-
-    name:
-      `${original.name} Copy`
-
-  };
+}
 
 
-  mine.unshift(
-    copy
+/* -------------------------------------------------------
+   PICKER
+------------------------------------------------------- */
+
+function renderPicker() {
+
+  var all =
+    getAllTemplates();
+
+
+  var categories = [
+    "All"
+  ];
+
+
+  all.forEach(
+    function(template) {
+
+      if (
+        !categories.includes(
+          template.category
+        )
+      ) {
+
+        categories.push(
+          template.category
+        );
+
+      }
+
+    }
   );
 
-  saveMine();
+
+  var shown =
+    all.filter(
+      function(template) {
+
+        var categoryMatch =
+          currentCategory === "All" ||
+          template.category ===
+            currentCategory;
+
+
+        var searchText =
+          (
+            template.name +
+            " " +
+            template.category +
+            " " +
+            (template.description || "")
+          ).toLowerCase();
+
+
+        var searchMatch =
+          searchText.includes(
+            currentSearch.toLowerCase()
+          );
+
+
+        return (
+          categoryMatch &&
+          searchMatch
+        );
+
+      }
+    );
+
+
+  var html =
+    header(
+      "Add Checklist to Card"
+    );
+
+
+  html += `
+    <div class="content">
+
+      <input
+        class="search"
+        placeholder="⌕  Search templates..."
+        value="${escapeHtml(currentSearch)}"
+        oninput="
+          currentSearch=this.value;
+          render();
+        "
+      >
+
+
+      <div class="category-tabs">
+
+        ${
+          categories
+            .map(
+              function(category) {
+
+                return `
+                  <button
+                    class="${
+                      currentCategory === category
+                        ? "active"
+                        : ""
+                    }"
+                    onclick="
+                      currentCategory=${JSON.stringify(category)};
+                      render();
+                    "
+                  >
+                    ${escapeHtml(category)}
+                  </button>
+                `;
+
+              }
+            )
+            .join("")
+        }
+
+      </div>
+  `;
+
+
+  if (!shown.length) {
+
+    html += `
+      <div class="empty">
+        No templates found.
+      </div>
+    `;
+
+  } else {
+
+    shown.forEach(
+      function(template) {
+
+        html += `
+          <div class="pick">
+
+            <span class="doc">
+              ${template.icon || "▤"}
+            </span>
+
+            <span class="pick-name">
+
+              ${escapeHtml(
+                template.name
+              )}
+
+              <small class="muted">
+                ${escapeHtml(
+                  template.description ||
+                  (
+                    template.items.length +
+                    " checklist items"
+                  )
+                )}
+              </small>
+
+            </span>
+
+            <button
+              class="use-button"
+              onclick="
+                selectTemplateForCard(
+                  '${template.id}'
+                )
+              "
+            >
+              Use
+            </button>
+
+          </div>
+        `;
+
+      }
+    );
+
+  }
+
+
+  html += `
+    </div>
+
+    <div class="footer">
+
+      <button
+        class="secondary"
+        onclick="goToList()"
+      >
+        Cancel
+      </button>
+
+    </div>
+  `;
+
+
+  app.innerHTML =
+    html;
+
+}
+
+
+/* -------------------------------------------------------
+   SELECT TEMPLATE
+------------------------------------------------------- */
+
+function selectTemplateForCard(
+  id
+) {
+
+  var template =
+    findTemplateById(id);
+
+
+  if (!template) {
+
+    showError(
+      "Template could not be found."
+    );
+
+    return;
+
+  }
+
+
+  selectedTemplate =
+    JSON.parse(
+      JSON.stringify(
+        template
+      )
+    );
+
+
+  currentScreen =
+    "preview";
+
 
   render();
 
 }
 
 
-/* --------------------------------------------------
-   Delete
--------------------------------------------------- */
+/* -------------------------------------------------------
+   PREVIEW
+------------------------------------------------------- */
 
-function deleteById(
+function openTemplatePreview(
   id
 ) {
 
-  if (
-    !confirm(
-      "Delete this template?"
-    )
-  ) {
+  var template =
+    findTemplateById(id);
+
+
+  if (!template) {
     return;
   }
 
 
-  mine =
-    mine.filter(
-      item =>
-        item.id !== id
+  selectedTemplate =
+    JSON.parse(
+      JSON.stringify(
+        template
+      )
     );
 
 
-  saveMine();
+  currentScreen =
+    "preview";
 
-  go("list");
+
+  render();
 
 }
 
 
-/* --------------------------------------------------
-   Start
--------------------------------------------------- */
+function renderPreview() {
+
+  if (!selectedTemplate) {
+
+    openCardPicker();
+
+    return;
+
+  }
+
+
+  var html =
+    header(
+      "Template Preview"
+    );
+
+
+  html += `
+    <div class="preview">
+
+      <div class="preview-title">
+
+        <span
+          class="doc"
+          style="font-size:22px"
+        >
+          ${selectedTemplate.icon || "▤"}
+        </span>
+
+        <div>
+
+          <strong>
+            ${escapeHtml(
+              selectedTemplate.name
+            )}
+          </strong>
+
+          <div class="muted">
+            ${escapeHtml(
+              selectedTemplate.category
+            )}
+            ·
+            ${selectedTemplate.items.length}
+            items
+          </div>
+
+        </div>
+
+      </div>
+  `;
+
+
+  selectedTemplate.items
+    .forEach(function(item) {
+
+      html += `
+        <div class="preview-item">
+
+          <input
+            type="checkbox"
+            disabled
+          >
+
+          <span>
+            ${escapeHtml(item)}
+          </span>
+
+        </div>
+      `;
+
+    });
+
+
+  html += `
+    </div>
+
+    <div class="footer">
+
+      <button
+        class="secondary"
+        onclick="
+          currentScreen='picker';
+          render();
+        "
+      >
+        Back
+      </button>
+
+      <button
+        class="primary"
+        onclick="addSelectedToCard()"
+      >
+        Add to Card
+      </button>
+
+    </div>
+  `;
+
+
+  app.innerHTML =
+    html;
+
+}
+
+
+/* -------------------------------------------------------
+   ADD TO CARD
+------------------------------------------------------- */
+
+function addSelectedToCard() {
+
+  if (!selectedTemplate) {
+
+    showError(
+      "Please select a checklist template first."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * IMPORTANT:
+   *
+   * First we send the selected template to
+   * the parent Trello card iframe.
+   *
+   * This makes the current UI work correctly.
+   */
+
+  try {
+
+    if (
+      window.parent &&
+      window.parent !== window
+    ) {
+
+      window.parent.postMessage(
+        {
+          type:
+            "rcl:checklist-added",
+
+          template:
+            selectedTemplate
+        },
+        "*"
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Parent message failed:",
+      error
+    );
+
+  }
+
+
+  currentScreen =
+    "success";
+
+
+  render();
+
+}
+
+
+/* -------------------------------------------------------
+   SUCCESS
+------------------------------------------------------- */
+
+function renderSuccess() {
+
+  app.innerHTML = `
+
+    <div class="success">
+
+      <div class="checkmark">
+        ✓
+      </div>
+
+      <h2>
+        Checklist Added
+      </h2>
+
+      <div class="muted">
+
+        ${escapeHtml(
+          selectedTemplate
+            ? selectedTemplate.name
+            : "Checklist"
+        )}
+
+        has been added
+        <br>
+        to this card.
+
+      </div>
+
+
+      <div class="success-actions">
+
+        <button
+          class="secondary"
+          onclick="openCardPicker()"
+        >
+          Add Another
+        </button>
+
+        <button
+          class="primary"
+          onclick="goToList()"
+        >
+          Done
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* -------------------------------------------------------
+   ERROR
+------------------------------------------------------- */
+
+function showError(
+  message
+) {
+
+  var old =
+    document.querySelector(
+      ".error"
+    );
+
+
+  if (old) {
+    old.remove();
+  }
+
+
+  var box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.className =
+    "error";
+
+
+  box.textContent =
+    message;
+
+
+  document.body.appendChild(
+    box
+  );
+
+
+  setTimeout(
+    function() {
+
+      if (box.parentNode) {
+        box.remove();
+      }
+
+    },
+    5000
+  );
+
+}
+
+
+/* -------------------------------------------------------
+   INITIAL RENDER
+------------------------------------------------------- */
 
 render();
 
 </script>
 
 </body>
-
 </html>
