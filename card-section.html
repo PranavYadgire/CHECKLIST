@@ -4,41 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checklist Templates</title>
+
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
+
   <style>
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:transparent;color:#172b4d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-    .section{padding:2px 0 8px}
-    .heading{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-    .icon{width:28px;height:28px;border-radius:8px;background:#0b3b4a;color:white;display:grid;place-items:center;font-size:15px}
-    .title{font-size:15px;font-weight:700;color:#172b4d}
-    .subtitle{font-size:12px;color:#626f86;margin-top:2px}
-    .open{margin-left:38px;border:0;border-radius:5px;background:#f1f2f4;color:#172b4d;padding:9px 13px;font-size:14px;font-weight:600;cursor:pointer}
-    .open:hover{background:#dfe1e6}
-    .empty{margin-left:38px;color:#626f86;font-size:12px}
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: #172b4d;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    }
+
+    .section {
+      padding: 2px 0 8px;
+    }
+
+    .heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0b3b4a;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #172b4d;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #626f86;
+      margin-top: 2px;
+    }
+
+    .open {
+      margin-left: 38px;
+      border: 0;
+      border-radius: 5px;
+      background: #f1f2f4;
+      color: #172b4d;
+      padding: 9px 13px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .open:hover {
+      background: #dfe1e6;
+    }
+
+    .open:active {
+      transform: translateY(1px);
+    }
   </style>
 </head>
+
 <body>
+
   <section class="section">
+
     <div class="heading">
       <div class="icon">▤</div>
+
       <div>
         <div class="title">Checklist Templates</div>
-        <div class="subtitle">Add reusable checklists from your template library to this card.</div>
+
+        <div class="subtitle">
+          Add reusable checklists from your template library to this card.
+        </div>
       </div>
     </div>
-    <button class="open" id="openLibrary">▤ &nbsp; Add from Template</button>
+
+    <button
+      class="open"
+      id="openLibrary"
+      type="button"
+    >
+      ▤ &nbsp; Add from Template
+    </button>
+
   </section>
+
   <script>
     const t = TrelloPowerUp.iframe();
-    document.getElementById('openLibrary').addEventListener('click', () => {
-      t.popup({
-  title: 'Add Checklist from Template',
-  url: './checklists.html?mode=picker',
-  height: 640,
-  width: 430
-});
+
+    const openLibraryButton =
+      document.getElementById("openLibrary");
+
+    openLibraryButton.addEventListener("click", async function (event) {
+
+      try {
+
+        await t.popup({
+          title: "Checklist Templates",
+
+          url: t.signUrl("./checklists.html"),
+
+          height: 640,
+
+          mouseEvent: event
+        });
+
+      } catch (error) {
+
+        console.error(
+          "Failed to open Checklist Library:",
+          error
+        );
+
+      }
+
     });
   </script>
+
 </body>
 </html>
