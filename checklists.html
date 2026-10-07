@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Checklist Templates</title>
 
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
@@ -11,17 +10,21 @@
 <style>
 :root{
   --blue:#0c66e4;
-  --soft:#e9f2ff;
+  --blue-dark:#0747a6;
+  --blue-soft:#e9f2ff;
+  --blue-soft-2:#f4f8ff;
   --text:#172b4d;
-  --muted:#626f86;
-  --line:#dfe1e6;
+  --muted:#6b778c;
+  --line:#e6e9ee;
+  --surface:#fff;
+  --surface-soft:#f7f8fa;
   --danger:#c9372c;
+  --danger-soft:#ffebe6;
   --green:#22a06b;
+  --shadow:0 10px 30px rgba(9,30,66,.12);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
@@ -29,173 +32,278 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   color:var(--text);
   font-size:13px;
-  background:#fff;
+  background:#f7f8fa;
 }
 
-button,input,select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
 #app{
   width:100%;
-  max-width:430px;
+  max-width:460px;
   margin:0 auto;
-  background:#fff;
+  background:var(--surface);
   min-height:100vh;
 }
 
-/* HEADER */
-
 .header{
-  height:54px;
+  height:58px;
   padding:0 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  background:#fff;
   border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .header h1{
   font-size:16px;
+  line-height:1;
   margin:0;
-  font-weight:700;
+  font-weight:750;
+  letter-spacing:-.1px;
 }
 
 .close{
+  width:32px;
+  height:32px;
   border:0;
+  border-radius:7px;
   background:transparent;
   color:#44546f;
   font-size:22px;
-  padding:3px 5px;
+  line-height:1;
+  padding:0;
+  display:grid;
+  place-items:center;
 }
 
-/* CONTENT */
+.close:hover{
+  background:#f1f2f4;
+  color:var(--text);
+}
 
 .content{
-  padding:11px 14px 15px;
+  padding:14px 16px 22px;
 }
 
 .search{
   width:100%;
-  height:36px;
-  border:1px solid #b6c2cf;
-  border-radius:6px;
-  padding:0 11px;
+  height:40px;
+  border:1px solid #b7c2d0;
+  border-radius:9px;
+  padding:0 12px;
   outline:none;
+  background:#fff;
+  color:var(--text);
+  transition:.15s;
 }
+
+.search::placeholder{color:#7a869a}
+.search:hover{border-color:#8c9aaa}
 
 .search:focus,
 .field input:focus,
 .field select:focus,
 .item-input:focus{
   border-color:var(--blue);
-  box-shadow:0 0 0 1px var(--blue);
+  box-shadow:0 0 0 3px rgba(12,102,228,.12);
 }
-
-/* TABS */
 
 .tabs{
   display:flex;
+  gap:2px;
   border-bottom:1px solid var(--line);
-  margin-top:8px;
+  margin-top:12px;
 }
 
 .tab{
   flex:1;
   border:0;
-  background:#fff;
-  color:#44546f;
-  padding:9px 5px 8px;
+  background:transparent;
+  color:#5e6c84;
+  padding:11px 7px 10px;
+  font-weight:600;
+  position:relative;
+}
+
+.tab:hover{
+  color:var(--text);
+  background:#fafbfc;
 }
 
 .tab.active{
   color:var(--blue);
-  font-weight:700;
-  border-bottom:2px solid var(--blue);
+  font-weight:750;
 }
 
-/* CREATE */
+.tab.active::after{
+  content:"";
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:-1px;
+  height:2px;
+  border-radius:2px;
+  background:var(--blue);
+}
 
 .create{
   width:100%;
-  border:0;
-  border-radius:6px;
-  background:var(--soft);
-  color:var(--blue);
-  font-weight:700;
-  padding:10px;
-  margin:9px 0 11px;
+  border:1px solid #cfe0fb;
+  border-radius:9px;
+  background:var(--blue-soft);
+  color:var(--blue-dark);
+  font-weight:750;
+  padding:11px 12px;
+  margin:13px 0 17px;
+  transition:.15s;
 }
 
-/* TEMPLATE LIST */
+.create:hover{
+  background:#dcecff;
+  border-color:#b8d2f7;
+  transform:translateY(-1px);
+}
+
+.starter-intro{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  background:linear-gradient(135deg,#f4f8ff,#fff);
+  border:1px solid #dbe7f8;
+  border-radius:11px;
+  padding:12px;
+  margin:13px 0 17px;
+}
+
+.starter-intro-icon{
+  width:34px;
+  height:34px;
+  flex:none;
+  border-radius:9px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-size:17px;
+}
+
+.starter-intro strong{
+  display:block;
+  font-size:12px;
+  margin-bottom:3px;
+}
+
+.starter-intro p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.45;
+}
 
 .category{
-  font-size:12px;
-  font-weight:700;
-  margin:11px 2px 5px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.55px;
+  font-weight:800;
+  color:#6b778c;
+  margin:18px 2px 7px;
 }
 
+.category:first-child{margin-top:2px}
+
 .template{
-  min-height:48px;
+  min-height:56px;
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:6px 3px;
-  border-bottom:1px solid #f1f2f4;
+  gap:10px;
+  padding:8px 7px;
+  border:1px solid transparent;
+  border-radius:10px;
+  transition:.15s;
+  margin-bottom:3px;
 }
 
 .template:hover{
-  background:#f7f8f9;
+  background:#f8fafc;
+  border-color:#e6ebf2;
 }
 
 .doc{
-  width:34px;
-  height:34px;
-  border-radius:8px;
-  background:#f1f2f4;
+  width:36px;
+  height:36px;
+  border-radius:9px;
+  background:#f1f5fa;
   display:grid;
   place-items:center;
   color:#44546f;
   font-size:16px;
   flex:none;
+  border:1px solid #e6eaf0;
+}
+
+.template:hover .doc{
+  background:var(--blue-soft);
+  color:var(--blue);
+  border-color:#d6e5fa;
 }
 
 .template-name{
   flex:1;
+  min-width:0;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-  font-weight:600;
+  font-weight:650;
+  font-size:13px;
+}
+
+.template-sub{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:500;
+  margin-top:2px;
 }
 
 .count{
-  font-size:11px;
-  color:var(--muted);
+  font-size:10px;
+  color:#5e6c84;
+  background:#f1f2f4;
+  border-radius:999px;
+  padding:4px 7px;
   white-space:nowrap;
 }
 
 .more{
+  width:30px;
+  height:30px;
   border:0;
+  border-radius:7px;
   background:transparent;
-  color:#44546f;
-  padding:3px 6px;
-  font-size:17px;
+  color:#6b778c;
+  padding:0;
+  font-size:16px;
+  letter-spacing:1px;
 }
 
-/* MENU */
+.more:hover{
+  background:#ebecf0;
+  color:var(--text);
+}
 
 .menu{
   position:fixed;
   z-index:100;
   background:#fff;
-  border:1px solid var(--line);
-  box-shadow:0 5px 16px rgba(9,30,66,.18);
-  border-radius:7px;
-  width:180px;
+  border:1px solid #dfe3e8;
+  box-shadow:0 12px 30px rgba(9,30,66,.18);
+  border-radius:10px;
+  width:190px;
   padding:5px;
 }
 
@@ -204,46 +312,59 @@ button{
   text-align:left;
   border:0;
   background:#fff;
-  padding:9px;
-  border-radius:5px;
+  padding:9px 10px;
+  border-radius:7px;
   color:var(--text);
+  font-weight:600;
 }
 
 .menu button:hover{
   background:#f1f2f4;
 }
 
-.menu .danger{
-  color:var(--danger);
+.menu .danger{color:var(--danger)}
+
+.menu .danger:hover{
+  background:var(--danger-soft);
 }
 
-/* BUTTONS */
-
 .footer{
-  padding:10px 14px 15px;
+  padding:11px 16px 16px;
   display:flex;
   justify-content:flex-end;
   gap:8px;
-  border-top:1px solid #f1f2f4;
+  border-top:1px solid var(--line);
+  background:#fff;
 }
 
 .primary,
 .secondary,
 .danger-btn{
   border:0;
-  border-radius:6px;
-  padding:8px 12px;
-  font-weight:700;
+  border-radius:8px;
+  padding:9px 13px;
+  font-weight:750;
+  transition:.15s;
 }
 
 .primary{
   background:var(--blue);
   color:#fff;
+  box-shadow:0 1px 2px rgba(9,30,66,.12);
+}
+
+.primary:hover{
+  background:var(--blue-dark);
+  transform:translateY(-1px);
 }
 
 .secondary{
   background:#f1f2f4;
   color:var(--text);
+}
+
+.secondary:hover{
+  background:#dfe1e6;
 }
 
 .danger-btn{
@@ -252,124 +373,134 @@ button{
   border:1px solid #ffbdad;
 }
 
-/* EMPTY */
-
 .empty{
   text-align:center;
   color:var(--muted);
-  padding:28px 8px;
+  padding:42px 12px;
 }
 
-/* FORM */
-
 .form{
-  padding:15px 16px;
+  padding:18px 16px 20px;
 }
 
 .field{
-  margin-bottom:14px;
+  margin-bottom:17px;
 }
 
 .field label{
   display:block;
-  font-weight:700;
-  margin-bottom:6px;
+  font-weight:750;
+  margin-bottom:7px;
 }
 
 .field input,
 .field select{
   width:100%;
-  height:36px;
-  border:1px solid #b6c2cf;
-  border-radius:6px;
+  height:40px;
+  border:1px solid #b7c2d0;
+  border-radius:8px;
   padding:0 10px;
   background:#fff;
   outline:none;
 }
 
 .items-label{
-  font-weight:700;
-  margin-bottom:7px;
+  font-weight:750;
+  margin-bottom:8px;
 }
 
 .items{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:7px;
 }
 
 .item{
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:7px;
 }
 
 .grip{
   width:14px;
-  color:#6b778c;
+  color:#8a95a5;
+  text-align:center;
 }
 
 .item-input{
   flex:1;
   min-width:0;
-  height:32px;
+  height:36px;
   border:1px solid var(--line);
-  border-radius:5px;
+  border-radius:8px;
   padding:0 9px;
   outline:none;
 }
 
 .trash{
+  width:30px;
+  height:30px;
   border:0;
-  background:#fff;
-  color:#626f86;
-  padding:4px;
+  border-radius:7px;
+  background:transparent;
+  color:#6b778c;
+  padding:0;
+}
+
+.trash:hover{
+  background:var(--danger-soft);
+  color:var(--danger);
 }
 
 .add-item{
-  border:0;
-  background:#f1f2f4;
-  border-radius:5px;
-  padding:7px 10px;
-  margin-top:8px;
+  border:1px dashed #b7c2d0;
+  background:#fff;
+  color:var(--blue);
+  border-radius:8px;
+  padding:8px 11px;
+  margin-top:9px;
+  font-weight:700;
+}
+
+.add-item:hover{
+  background:var(--blue-soft);
+  border-color:#9dbde8;
 }
 
 .form-actions{
   display:flex;
   justify-content:flex-end;
   gap:8px;
-  border-top:1px solid #f1f2f4;
-  margin-top:16px;
-  padding-top:12px;
+  border-top:1px solid var(--line);
+  margin-top:20px;
+  padding-top:13px;
 }
-
-/* SUCCESS */
 
 .success{
   text-align:center;
-  padding:25px 20px;
+  padding:48px 22px;
 }
 
 .check{
-  width:44px;
-  height:44px;
+  width:50px;
+  height:50px;
   border-radius:50%;
   display:grid;
   place-items:center;
-  background:var(--green);
-  color:#fff;
-  font-size:25px;
-  margin:0 auto 12px;
+  background:#e3fcef;
+  color:var(--green);
+  font-size:27px;
+  margin:0 auto 14px;
 }
 
 .success h2{
-  font-size:17px;
-  margin:0 0 5px;
+  font-size:18px;
+  margin:0 0 6px;
 }
 
 .success p{
   color:var(--muted);
-  line-height:1.45;
+  line-height:1.5;
   margin:0;
 }
 
@@ -377,109 +508,140 @@ button{
   display:flex;
   justify-content:center;
   gap:8px;
-  margin-top:18px;
+  margin-top:20px;
 }
 
-/* PREVIEW */
-
 .preview{
-  padding:15px 16px;
+  padding:17px 16px 18px;
 }
 
 .preview-head{
   display:flex;
-  gap:10px;
+  gap:11px;
   align-items:center;
-  margin-bottom:13px;
+  margin-bottom:15px;
+  padding:12px;
+  border:1px solid #e2e7ee;
+  border-radius:11px;
+  background:#fafbfc;
 }
 
 .preview-icon{
-  width:34px;
-  height:34px;
-  border-radius:7px;
-  background:#f1f2f4;
+  width:38px;
+  height:38px;
+  border-radius:9px;
+  background:var(--blue-soft);
+  color:var(--blue);
   display:grid;
   place-items:center;
   font-size:18px;
+  flex:none;
 }
 
 .preview-head strong{
   display:block;
+  font-size:14px;
 }
 
 .preview-head small{
+  display:block;
   color:var(--muted);
+  margin-top:3px;
 }
 
 .preview-item{
   display:flex;
   align-items:center;
-  gap:9px;
-  border:1px solid var(--line);
-  border-radius:5px;
-  padding:7px 8px;
-  margin-bottom:6px;
+  gap:10px;
+  border:1px solid #e4e8ee;
+  border-radius:9px;
+  padding:10px 11px;
+  margin-bottom:7px;
+  background:#fff;
+}
+
+.preview-item:hover{
+  background:#fafcff;
+  border-color:#cfe0fb;
 }
 
 .preview-item input{
-  width:15px;
-  height:15px;
+  width:16px;
+  height:16px;
+  accent-color:var(--blue);
+  flex:none;
 }
 
 .preview-actions{
   display:flex;
   justify-content:flex-end;
   gap:8px;
-  border-top:1px solid #f1f2f4;
-  margin-top:14px;
-  padding-top:12px;
+  border-top:1px solid var(--line);
+  margin-top:16px;
+  padding-top:13px;
 }
-
-/* PICKER */
 
 .category-tabs{
   display:flex;
   overflow-x:auto;
   border-bottom:1px solid var(--line);
-  margin:8px 0 9px;
+  margin:10px 0 10px;
+  scrollbar-width:none;
+}
+
+.category-tabs::-webkit-scrollbar{
+  display:none;
 }
 
 .category-tabs button{
   border:0;
-  background:#fff;
-  color:#44546f;
-  padding:8px;
+  background:transparent;
+  color:#5e6c84;
+  padding:9px 10px;
   white-space:nowrap;
+  font-weight:600;
 }
 
 .category-tabs button.active{
   color:var(--blue);
+  font-weight:750;
   border-bottom:2px solid var(--blue);
 }
 
 .pick{
   display:flex;
   align-items:center;
-  gap:8px;
-  min-height:44px;
-  padding:6px 3px;
-  border-bottom:1px solid #f1f2f4;
+  gap:9px;
+  min-height:52px;
+  padding:7px;
+  border:1px solid transparent;
+  border-radius:9px;
+  margin-bottom:3px;
+}
+
+.pick:hover{
+  background:#f8fafc;
+  border-color:#e6ebf2;
 }
 
 .pick-name{
   flex:1;
+  min-width:0;
+  font-weight:650;
 }
 
 .pick button{
-  border:0;
-  background:var(--soft);
-  color:var(--blue);
-  border-radius:5px;
-  padding:5px 10px;
-  font-weight:700;
+  border:1px solid #cfe0fb;
+  background:var(--blue-soft);
+  color:var(--blue-dark);
+  border-radius:7px;
+  padding:6px 10px;
+  font-weight:750;
 }
 
-/* STATUS */
+.pick button:hover{
+  background:#dcecff;
+}
 
 .status{
   position:fixed;
@@ -488,31 +650,27 @@ button{
   transform:translateX(-50%);
   background:#172b4d;
   color:#fff;
-  padding:9px 13px;
-  border-radius:6px;
+  padding:10px 14px;
+  border-radius:9px;
   display:none;
   z-index:200;
   max-width:90%;
   text-align:center;
+  box-shadow:0 8px 24px rgba(9,30,66,.22);
 }
 
-.status.show{
-  display:block;
-}
-
-.status.error{
-  background:#c9372c;
-}
+.status.show{display:block}
+.status.error{background:#c9372c}
 
 @media(min-width:700px){
   body{
     background:#f1f2f4;
-    padding:20px 0;
+    padding:22px 0;
   }
 
   #app{
-    border-radius:8px;
-    box-shadow:0 4px 18px rgba(9,30,66,.16);
+    border-radius:12px;
+    box-shadow:var(--shadow);
     min-height:0;
     overflow:hidden;
   }
@@ -528,131 +686,122 @@ button{
 <script>
 
 const starter = [
-
-{
-  name:"Website QA Checklist",
-  category:"QA & Testing",
-  items:[
-    "Test on staging environment",
-    "Check mobile view",
-    "Check broken links",
-    "Verify analytics tracking",
-    "Get client sign-off",
-    "Deploy to production"
-  ],
-  starter:true
-},
-
-{
-  name:"Mobile App QA",
-  category:"QA & Testing",
-  items:[
-    "Install application",
-    "Test login",
-    "Test navigation",
-    "Check notifications",
-    "Test on multiple devices",
-    "Check performance",
-    "Verify app permissions",
-    "Test logout"
-  ],
-  starter:true
-},
-
-{
-  name:"Regression Testing",
-  category:"QA & Testing",
-  items:[
-    "Review requirements",
-    "Run smoke tests",
-    "Test critical flows",
-    "Check existing features",
-    "Verify bug fixes",
-    "Prepare test report"
-  ],
-  starter:true
-},
-
-{
-  name:"Product Launch",
-  category:"Product Launch",
-  items:[
-    "Finalize product",
-    "Prepare launch plan",
-    "Create marketing assets",
-    "Test product",
-    "Publish announcement",
-    "Monitor launch",
-    "Collect feedback",
-    "Review results",
-    "Share report"
-  ],
-  starter:true
-},
-
-{
-  name:"Feature Launch",
-  category:"Product Launch",
-  items:[
-    "Define feature scope",
-    "Complete development",
-    "Perform QA",
-    "Prepare documentation",
-    "Deploy feature",
-    "Monitor performance",
-    "Collect feedback"
-  ],
-  starter:true
-},
-
-{
-  name:"Client Onboarding",
-  category:"Onboarding",
-  items:[
-    "Create client profile",
-    "Send welcome email",
-    "Schedule kickoff call",
-    "Collect requirements",
-    "Set up access",
-    "Share documentation",
-    "Complete training",
-    "Confirm onboarding"
-  ],
-  starter:true
-},
-
-{
-  name:"Employee Onboarding",
-  category:"Onboarding",
-  items:[
-    "Prepare workstation",
-    "Create accounts",
-    "Share company policies",
-    "Introduce team",
-    "Assign mentor",
-    "Complete training",
-    "Review first week",
-    "Collect feedback",
-    "Set goals",
-    "Schedule check-in"
-  ],
-  starter:true
-},
-
-{
-  name:"Campaign Launch",
-  category:"Marketing",
-  items:[
-    "Define campaign goals",
-    "Identify target audience",
-    "Prepare content",
-    "Create campaign assets",
-    "Review campaign",
-    "Schedule launch"
-  ],
-  starter:true
-}
-
+  {
+    name:"Website QA Checklist",
+    category:"QA & Testing",
+    items:[
+      "Test on staging environment",
+      "Check mobile view",
+      "Check broken links",
+      "Verify analytics tracking",
+      "Get client sign-off",
+      "Deploy to production"
+    ],
+    starter:true
+  },
+  {
+    name:"Mobile App QA",
+    category:"QA & Testing",
+    items:[
+      "Install application",
+      "Test login",
+      "Test navigation",
+      "Check notifications",
+      "Test on multiple devices",
+      "Check performance",
+      "Verify app permissions",
+      "Test logout"
+    ],
+    starter:true
+  },
+  {
+    name:"Regression Testing",
+    category:"QA & Testing",
+    items:[
+      "Review requirements",
+      "Run smoke tests",
+      "Test critical flows",
+      "Check existing features",
+      "Verify bug fixes",
+      "Prepare test report"
+    ],
+    starter:true
+  },
+  {
+    name:"Product Launch",
+    category:"Product Launch",
+    items:[
+      "Finalize product",
+      "Prepare launch plan",
+      "Create marketing assets",
+      "Test product",
+      "Publish announcement",
+      "Monitor launch",
+      "Collect feedback",
+      "Review results",
+      "Share report"
+    ],
+    starter:true
+  },
+  {
+    name:"Feature Launch",
+    category:"Product Launch",
+    items:[
+      "Define feature scope",
+      "Complete development",
+      "Perform QA",
+      "Prepare documentation",
+      "Deploy feature",
+      "Monitor performance",
+      "Collect feedback"
+    ],
+    starter:true
+  },
+  {
+    name:"Client Onboarding",
+    category:"Onboarding",
+    items:[
+      "Create client profile",
+      "Send welcome email",
+      "Schedule kickoff call",
+      "Collect requirements",
+      "Set up access",
+      "Share documentation",
+      "Complete training",
+      "Confirm onboarding"
+    ],
+    starter:true
+  },
+  {
+    name:"Employee Onboarding",
+    category:"Onboarding",
+    items:[
+      "Prepare workstation",
+      "Create accounts",
+      "Share company policies",
+      "Introduce team",
+      "Assign mentor",
+      "Complete training",
+      "Review first week",
+      "Collect feedback",
+      "Set goals",
+      "Schedule check-in"
+    ],
+    starter:true
+  },
+  {
+    name:"Campaign Launch",
+    category:"Marketing",
+    items:[
+      "Define campaign goals",
+      "Identify target audience",
+      "Prepare content",
+      "Create campaign assets",
+      "Review campaign",
+      "Schedule launch"
+    ],
+    starter:true
+  }
 ];
 
 let mine = [];
@@ -678,24 +827,19 @@ const app = document.getElementById("app");
 const statusEl = document.getElementById("status");
 
 function save(){
-
   localStorage.setItem(
     "rcl_mine",
     JSON.stringify(mine)
   );
-
 }
 
 function closeMenu(){
-
   document
     .querySelectorAll(".menu")
     .forEach(x => x.remove());
-
 }
 
 function toast(message,error=false){
-
   statusEl.textContent = message;
 
   statusEl.className =
@@ -710,11 +854,9 @@ function toast(message,error=false){
     },
     3500
   );
-
 }
 
 function esc(value){
-
   return String(value ?? "")
     .replace(/[&<>"']/g,c => ({
       "&":"&amp;",
@@ -723,28 +865,34 @@ function esc(value){
       '"':"&quot;",
       "'":"&#39;"
     }[c]));
-
 }
 
-function header(title){
-
+/* Main header.
+   showClose=false is used ONLY on the main library screen.
+*/
+function header(title,showClose=true){
   return `
     <header class="header">
       <h1>${esc(title)}</h1>
 
-      <button
-        class="close"
-        onclick="screen='list';render()"
-      >
-        ×
-      </button>
+      ${
+        showClose
+        ? `
+          <button
+            class="close"
+            onclick="screen='list';render()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        `
+        : ""
+      }
     </header>
   `;
-
 }
 
 function render(){
-
   closeMenu();
 
   if(screen === "list"){
@@ -770,7 +918,6 @@ function render(){
   if(screen === "added"){
     added();
   }
-
 }
 
 function visibleTemplates(){
@@ -783,10 +930,9 @@ function visibleTemplates(){
   return source.filter(
     x =>
       (x.name + " " + x.category)
-      .toLowerCase()
-      .includes(query.toLowerCase())
+        .toLowerCase()
+        .includes(query.toLowerCase())
   );
-
 }
 
 function list(){
@@ -801,7 +947,10 @@ function list(){
   );
 
   app.innerHTML =
-    header("Checklist Templates") +
+    header(
+      "Checklist Templates",
+      false
+    ) +
 
     `
     <main class="content">
@@ -811,19 +960,20 @@ function list(){
         value="${esc(query)}"
         placeholder="⌕  Search templates..."
         oninput="query=this.value;render()"
+        aria-label="Search templates"
       >
 
       <div class="tabs">
 
         <button
-          class="tab ${tab === "mine" ? "active" : ""}"
+          class="tab ${tab==="mine"?"active":""}"
           onclick="tab='mine';query='';render()"
         >
           My Templates
         </button>
 
         <button
-          class="tab ${tab === "starter" ? "active" : ""}"
+          class="tab ${tab==="starter"?"active":""}"
           onclick="tab='starter';query='';render()"
         >
           Starter Templates
@@ -831,78 +981,118 @@ function list(){
 
       </div>
 
-      <button
-        class="create"
-        onclick="newTemplate()"
-      >
-        ＋ Create Template
-      </button>
+      ${
+        tab === "mine"
+        ?
+        `
+        <button
+          class="create"
+          onclick="newTemplate()"
+        >
+          ＋ Create Template
+        </button>
+        `
+        :
+        `
+        <div class="starter-intro">
+
+          <div class="starter-intro-icon">
+            ✦
+          </div>
+
+          <div>
+            <strong>Ready-to-use templates</strong>
+
+            <p>
+              Start quickly with professionally structured
+              checklists. Preview or use one directly on a card.
+            </p>
+          </div>
+
+        </div>
+        `
+      }
 
       ${
         Object.entries(groups)
-        .map(
-          ([group,items]) => `
+          .map(
+            ([category,items]) => `
 
-            <div class="category">
-              ${esc(group)}
-            </div>
+              <div class="category">
+                ${esc(category)}
+              </div>
 
-            ${
-              items
-              .map(
-                (x,i) => {
+              ${
+                items
+                  .map(
+                    x => {
 
-                  const id =
-                    tab === "mine"
-                      ? x.id
-                      : i;
+                      const id =
+                        tab === "mine"
+                          ? x.id
+                          : starter.indexOf(x);
 
-                  return `
+                      return `
 
-                    <div class="template">
+                        <div class="template">
 
-                      <span class="doc">
-                        ▤
-                      </span>
+                          <span class="doc">
+                            ▤
+                          </span>
 
-                      <span class="template-name">
-                        ${esc(x.name)}
-                      </span>
+                          <span style="flex:1;min-width:0">
 
-                      <span class="count">
-                        ${x.items.length}
-                      </span>
+                            <span class="template-name">
+                              ${esc(x.name)}
+                            </span>
 
-                      <button
-                        class="more"
-                        onclick="openMenu(event,'${esc(String(id))}')"
-                      >
-                        ···
-                      </button>
+                            <span class="template-sub">
+                              ${
+                                tab === "starter"
+                                  ? "Ready to use"
+                                  : "Custom template"
+                              }
+                            </span>
 
-                    </div>
+                          </span>
 
-                  `;
+                          <span class="count">
+                            ${x.items.length} items
+                          </span>
 
-                }
-              )
-              .join("")
-            }
+                          <button
+                            class="more"
+                            onclick="openMenu(event,'${esc(String(id))}')"
+                            aria-label="Template options"
+                          >
+                            ···
+                          </button>
 
-          `
-        )
-        .join("")
+                        </div>
+
+                      `;
+                    }
+                  )
+                  .join("")
+              }
+
+            `
+          )
+          .join("")
       }
 
       ${
         !Object.keys(groups).length
-          ? `<div class="empty">No templates found.</div>`
+          ? `
+            <div class="empty">
+              No templates found.
+            </div>
+          `
           : ""
       }
 
     </main>
     `;
-
 }
 
 function getTemplate(id){
@@ -914,7 +1104,6 @@ function getTemplate(id){
   }
 
   return starter[Number(id)];
-
 }
 
 function openMenu(event,id){
@@ -936,14 +1125,14 @@ function openMenu(event,id){
       8,
       Math.min(
         rect.left - 135,
-        innerWidth - 188
+        innerWidth - 198
       )
     ) + "px";
 
   menu.style.top =
     Math.min(
       rect.bottom + 3,
-      innerHeight - 205
+      innerHeight - 220
     ) + "px";
 
   menu.innerHTML = `
@@ -953,7 +1142,7 @@ function openMenu(event,id){
     </button>
 
     <button onclick="previewFromMenu('${id}')">
-      ◉ &nbsp; View Details
+      ◉ &nbsp; Preview
     </button>
 
     ${
@@ -961,20 +1150,20 @@ function openMenu(event,id){
       ?
       `
 
-      <button onclick="editFromMenu('${id}')">
-        ✎ &nbsp; Edit Template
-      </button>
+        <button onclick="editFromMenu('${id}')">
+          ✎ &nbsp; Edit Template
+        </button>
 
-      <button onclick="duplicateFromMenu('${id}')">
-        ▣ &nbsp; Duplicate
-      </button>
+        <button onclick="duplicateFromMenu('${id}')">
+          ▣ &nbsp; Duplicate
+        </button>
 
-      <button
-        class="danger"
-        onclick="deleteFromMenu('${id}')"
-      >
-        ▤ &nbsp; Delete Template
-      </button>
+        <button
+          class="danger"
+          onclick="deleteFromMenu('${id}')"
+        >
+          ▤ &nbsp; Delete Template
+        </button>
 
       `
       :
@@ -987,15 +1176,16 @@ function openMenu(event,id){
 
   setTimeout(
     () => {
+
       document.addEventListener(
         "click",
         closeMenu,
         {once:true}
       );
+
     },
     0
   );
-
 }
 
 function addFromMenu(id){
@@ -1006,7 +1196,6 @@ function addFromMenu(id){
     getTemplate(id);
 
   addToCard();
-
 }
 
 function previewFromMenu(id){
@@ -1019,7 +1208,6 @@ function previewFromMenu(id){
   screen = "preview";
 
   render();
-
 }
 
 function editFromMenu(id){
@@ -1031,80 +1219,110 @@ function editFromMenu(id){
       x => x.id === id
     );
 
+  if(editIndex < 0){
+    return;
+  }
+
+  selected =
+    JSON.parse(
+      JSON.stringify(
+        mine[editIndex]
+      )
+    );
+
   screen = "form";
 
   render();
-
 }
 
 function duplicateFromMenu(id){
 
+  closeMenu();
+
   const original =
-    mine.find(
-      x => x.id === id
-    );
+    getTemplate(id);
 
   if(!original){
     return;
   }
 
-  mine.unshift({
+  const copy =
+    JSON.parse(
+      JSON.stringify(original)
+    );
 
-    ...original,
+  copy.id =
+    crypto.randomUUID();
 
-    id:
-      crypto.randomUUID(),
+  copy.name =
+    copy.name + " (Copy)";
 
-    name:
-      original.name + " Copy",
+  copy.starter = false;
 
-    items:
-      [...original.items]
-
-  });
+  mine.unshift(copy);
 
   save();
+
+  tab = "mine";
 
   render();
 
   toast("Template duplicated");
-
 }
 
 function deleteFromMenu(id){
 
-  if(!confirm("Delete this template?")){
+  closeMenu();
+
+  const index =
+    mine.findIndex(
+      x => x.id === id
+    );
+
+  if(index < 0){
     return;
   }
 
-  mine =
-    mine.filter(
-      x => x.id !== id
-    );
+  if(
+    !confirm(
+      "Delete this template?"
+    )
+  ){
+    return;
+  }
+
+  mine.splice(index,1);
 
   save();
 
   render();
 
   toast("Template deleted");
-
 }
 
 function newTemplate(){
 
   editIndex = -1;
 
+  selected = {
+    name:"",
+    category:"QA & Testing",
+    items:[""]
+  };
+
   screen = "form";
 
   render();
-
 }
 
 function form(){
 
-  const x =
-    editIndex >= 0
-      ? mine[editIndex]
+  const editing =
+    editIndex >= 0;
+
+  const data =
+    editing
+      ? selected
       : {
           name:"",
           category:"QA & Testing",
@@ -1113,36 +1331,33 @@ function form(){
 
   app.innerHTML =
     header(
-      editIndex >= 0
+      editing
         ? "Edit Checklist Template"
         : "Create Checklist Template"
     ) +
 
     `
 
-    <form
-      class="form"
-      onsubmit="saveForm(event)"
-    >
+    <main class="form">
 
       <div class="field">
 
-        <label>
+        <label for="name">
           Template Name
         </label>
 
         <input
           id="name"
-          required
           maxlength="80"
-          value="${esc(x.name)}"
+          value="${esc(data.name)}"
+          placeholder="e.g. Website QA Checklist"
         >
 
       </div>
 
       <div class="field">
 
-        <label>
+        <label for="category">
           Category
         </label>
 
@@ -1152,89 +1367,119 @@ function form(){
           <option>Product Launch</option>
           <option>Onboarding</option>
           <option>Marketing</option>
-          <option>General</option>
+          <option>Development</option>
+          <option>Other</option>
 
         </select>
 
       </div>
 
-      <div class="items-label">
-        Checklist Items
-      </div>
+      <div class="field">
 
-      <div
-        class="items"
-        id="items"
-      >
-        ${x.items.map(itemRow).join("")}
-      </div>
+        <div class="items-label">
+          Checklist Items
+        </div>
 
-      <button
-        type="button"
-        class="add-item"
-        onclick="addItem()"
-      >
-        ＋ Add item
-      </button>
+        <div
+          class="items"
+          id="items"
+        >
+
+          ${
+            data.items
+              .map(
+                (x,i) =>
+                  itemRow(x,i)
+              )
+              .join("")
+          }
+
+        </div>
+
+        <button
+          class="add-item"
+          onclick="addItem()"
+          type="button"
+        >
+          ＋ Add item
+        </button>
+
+      </div>
 
       <div class="form-actions">
 
+        ${
+          editing
+          ?
+          `
+            <button
+              class="danger-btn"
+              onclick="removeCurrentTemplate()"
+              type="button"
+            >
+              Delete
+            </button>
+          `
+          :
+          ""
+        }
+
         <button
-          type="button"
           class="secondary"
           onclick="screen='list';render()"
+          type="button"
         >
           Cancel
         </button>
 
-        <button class="primary">
-          ${
-            editIndex >= 0
-              ? "Save Changes"
-              : "Save Template"
-          }
+        <button
+          class="primary"
+          onclick="saveTemplate()"
+          type="button"
+        >
+          ${editing ? "Save Changes" : "Save Template"}
         </button>
 
       </div>
 
-    </form>
-
+    </main>
     `;
 
   document.getElementById(
     "category"
-  ).value = x.category;
-
+  ).value =
+    data.category;
 }
 
-function itemRow(value){
+function itemRow(value,index){
 
   return `
 
     <div class="item">
 
       <span class="grip">
-        ⁝⁝
+        ⠿
       </span>
 
       <input
         class="item-input"
+        type="text"
         value="${esc(value)}"
         placeholder="Checklist item"
       >
 
       <button
-        type="button"
         class="trash"
+        type="button"
         onclick="this.parentElement.remove()"
+        aria-label="Remove item"
       >
-        ✕
+        ×
       </button>
 
     </div>
 
   `;
-
 }
 
 function addItem(){
@@ -1243,19 +1488,18 @@ function addItem(){
     .getElementById("items")
     .insertAdjacentHTML(
       "beforeend",
-      itemRow("")
+      itemRow("",Date.now())
     );
 
-  document
-    .querySelectorAll(".item-input")
-    .at(-1)
-    ?.focus();
+  const inputs =
+    document.querySelectorAll(
+      ".item-input"
+    );
 
+  inputs[inputs.length - 1]?.focus();
 }
 
-function saveForm(event){
-
-  event.preventDefault();
+function saveTemplate(){
 
   const name =
     document
@@ -1274,15 +1518,25 @@ function saveForm(event){
         ".item-input"
       )
     ]
-    .map(
-      x => x.value.trim()
-    )
-    .filter(Boolean);
+      .map(
+        x => x.value.trim()
+      )
+      .filter(Boolean);
 
-  if(!name || !items.length){
+  if(!name){
 
     toast(
-      "Enter a name and at least one item.",
+      "Enter a template name.",
+      true
+    );
+
+    return;
+  }
+
+  if(!items.length){
+
+    toast(
+      "Add at least one checklist item.",
       true
     );
 
@@ -1292,46 +1546,80 @@ function saveForm(event){
   if(editIndex >= 0){
 
     mine[editIndex] = {
-
       ...mine[editIndex],
-
       name,
       category,
       items
-
     };
+
+    selected =
+      JSON.parse(
+        JSON.stringify(
+          mine[editIndex]
+        )
+      );
 
   }else{
 
-    mine.unshift({
-
+    const created = {
       id:crypto.randomUUID(),
-
       name,
-
       category,
+      items,
+      starter:false
+    };
 
-      items
+    mine.unshift(created);
 
-    });
-
+    selected =
+      JSON.parse(
+        JSON.stringify(created)
+      );
   }
 
   save();
 
-  selected = {
-    name,
-    category,
-    items
-  };
-
   screen = "created";
 
   render();
+}
 
+function removeCurrentTemplate(){
+
+  if(editIndex < 0){
+    return;
+  }
+
+  if(
+    !confirm(
+      "Delete this template?"
+    )
+  ){
+    return;
+  }
+
+  mine.splice(
+    editIndex,
+    1
+  );
+
+  save();
+
+  editIndex = -1;
+
+  selected = null;
+
+  screen = "list";
+
+  render();
+
+  toast("Template deleted");
 }
 
 function created(){
+
+  const editing =
+    editIndex >= 0;
 
   app.innerHTML = `
 
@@ -1342,15 +1630,11 @@ function created(){
       </div>
 
       <h2>
-        ${
-          editIndex >= 0
-            ? "Changes Saved"
-            : "Template Created"
-        }
+        ${editing ? "Changes Saved" : "Template Created"}
       </h2>
 
       <p>
-        ${esc(selected.name)}
+        ${esc(selected?.name || "Checklist")}
         is ready in your template library.
       </p>
 
@@ -1367,7 +1651,7 @@ function created(){
           class="primary"
           onclick="addToCard()"
         >
-          ＋ Add to Card
+          Add to Card
         </button>
 
       </div>
@@ -1375,7 +1659,6 @@ function created(){
     </div>
 
   `;
-
 }
 
 function picker(){
@@ -1383,17 +1666,26 @@ function picker(){
   const categories = [
     "All",
     ...new Set(
-      mine.map(x => x.category)
+      mine.map(
+        x => x.category
+      )
     )
   ];
 
   const arr =
     mine.filter(
       x =>
-        (cat === "All" || x.category === cat) &&
-        (x.name + " " + x.category)
+        (cat === "All" ||
+          x.category === cat) &&
+        (
+          x.name +
+          " " +
+          x.category
+        )
           .toLowerCase()
-          .includes(query.toLowerCase())
+          .includes(
+            query.toLowerCase()
+          )
     );
 
   app.innerHTML =
@@ -1416,73 +1708,74 @@ function picker(){
 
         ${
           categories
-          .map(
-            c => `
+            .map(
+              c => `
 
-              <button
-                class="${cat === c ? "active" : ""}"
-                onclick="cat=${JSON.stringify(c)};render()"
-              >
-                ${esc(c)}
-              </button>
+                <button
+                  class="${
+                    cat === c
+                      ? "active"
+                      : ""
+                  }"
+                  onclick="cat=${JSON.stringify(c)};render()"
+                >
+                  ${esc(c)}
+                </button>
 
-            `
-          )
-          .join("")
+              `
+            )
+            .join("")
         }
 
       </div>
 
       ${
         arr
-        .map(
-          x => `
+          .map(
+            x => `
 
-            <div class="pick">
+              <div class="pick">
 
-              <span class="doc">
-                ▤
-              </span>
+                <span class="doc">
+                  ▤
+                </span>
 
-              <span class="pick-name">
-                ${esc(x.name)}
-              </span>
+                <span class="pick-name">
+                  ${esc(x.name)}
+                </span>
 
-              <span class="count">
-                ${x.items.length}
-              </span>
+                <span class="count">
+                  ${x.items.length}
+                </span>
 
-              <button
-                onclick="
-                  selected=mine.find(
-                    y=>y.id==='${x.id}'
-                  );
-                  addToCard();
-                "
-              >
-                Add to Card
-              </button>
+                <button
+                  onclick="selected=mine.find(y=>y.id==='${x.id}');screen='preview';render()"
+                >
+                  Use
+                </button>
 
-            </div>
+              </div>
 
+            `
+          )
+          .join("")
+          ||
           `
-        )
-        .join("")
-        ||
-        `<div class="empty">
-          No templates found.
-        </div>`
+            <div class="empty">
+              No templates found.
+            </div>
+          `
       }
 
     </main>
 
     `;
-
 }
 
 function preview(){
 
-  const x = selected;
+  const x =
+    selected;
 
   if(!x){
     screen = "list";
@@ -1491,9 +1784,12 @@ function preview(){
   }
 
   app.innerHTML =
-    header("Template Preview") +
+    header(
+      "Template Preview"
+    ) +
 
     `
+
     <main class="preview">
 
       <div class="preview-head">
@@ -1518,7 +1814,6 @@ function preview(){
 
       </div>
 
-
       ${
         x.items
           .map(
@@ -1542,7 +1837,6 @@ function preview(){
           .join("")
       }
 
-
       <div class="preview-actions">
 
         <button
@@ -1562,227 +1856,181 @@ function preview(){
       </div>
 
     </main>
-    `;
 
+  `;
+}
+
+/*
+  Trello REST integration
+*/
+
+async function getTrelloContext(){
+
+  const trello =
+    window.TrelloPowerUp.iframe({
+      appKey:
+        window.RCL_APP_KEY,
+      appName:
+        window.RCL_APP_NAME
+    });
+
+  return trello;
+}
+
+async function trelloRequest(
+  method,
+  path,
+  params={}
+){
+
+  const trello =
+    await getTrelloContext();
+
+  const restApi =
+    await trello.getRestApi();
+
+  const authorized =
+    await restApi.isAuthorized();
+
+  if(!authorized){
+
+    const error =
+      new Error(
+        "NOT_AUTHORIZED"
+      );
+
+    error.code =
+      "NOT_AUTHORIZED";
+
+    throw error;
+  }
+
+  const token =
+    await restApi.getToken();
+
+  if(!token){
+
+    const error =
+      new Error(
+        "NOT_AUTHORIZED"
+      );
+
+    error.code =
+      "NOT_AUTHORIZED";
+
+    throw error;
+  }
+
+  const query =
+    new URLSearchParams();
+
+  query.set(
+    "key",
+    window.RCL_APP_KEY
+  );
+
+  query.set(
+    "token",
+    token
+  );
+
+  Object.entries(params)
+    .forEach(
+      ([key,value]) => {
+
+        if(
+          value !== undefined &&
+          value !== null
+        ){
+
+          query.set(
+            key,
+            String(value)
+          );
+
+        }
+
+      }
+    );
+
+  const response =
+    await fetch(
+      `https://api.trello.com/1${path}?${query.toString()}`,
+      {
+        method
+      }
+    );
+
+  if(!response.ok){
+
+    let message =
+      `Trello API request failed (${response.status}).`;
+
+    try{
+
+      const body =
+        await response.json();
+
+      if(body?.message){
+        message =
+          body.message;
+      }
+
+    }catch(e){}
+
+    throw new Error(
+      message
+    );
+  }
+
+  return response.json();
 }
 
 async function addToCard(){
 
   if(!selected){
-
-    toast(
-      "Please select a template first.",
-      true
-    );
-
     return;
-
   }
-
 
   try{
 
+    screen = "added";
+    render();
+
     const trello =
-      window.TrelloPowerUp.iframe({
-        appKey: window.RCL_APP_KEY,
-        appName: window.RCL_APP_NAME
-      });
-
-
-    if(
-      !trello ||
-      typeof trello.card !== "function"
-    ){
-
-      throw new Error(
-        "Trello card context is unavailable."
-      );
-
-    }
-
+      await getTrelloContext();
 
     const card =
       await trello.card("id");
 
-
-    if(
-      !card ||
-      !card.id
-    ){
+    if(!card?.id){
 
       throw new Error(
         "Could not find the current Trello card."
       );
-
     }
-
-
-    /*
-      Get Trello REST API client.
-    */
 
     const restApi =
       await trello.getRestApi();
 
-
-    /*
-      Check authorization.
-    */
-
-    let authorized =
+    const authorized =
       await restApi.isAuthorized();
 
-
     if(!authorized){
 
-      await restApi.authorize({
-        expiration: "never",
-        scope: "read,write"
-      });
+      const error =
+        new Error(
+          "NOT_AUTHORIZED"
+        );
 
+      error.code =
+        "NOT_AUTHORIZED";
 
-      authorized =
-        await restApi.isAuthorized();
-
+      throw error;
     }
-
-
-    if(!authorized){
-
-      throw new Error(
-        "Trello authorization was not completed."
-      );
-
-    }
-
 
     /*
-      Get OAuth token.
-    */
-
-    const token =
-      await restApi.getToken();
-
-
-    if(!token){
-
-      throw new Error(
-        "Trello authorization token was not found."
-      );
-
-    }
-
-
-    /*
-      Helper for Trello REST API requests.
-    */
-
-    async function trelloRequest(
-      method,
-      path,
-      params = {}
-    ){
-
-      const url =
-        new URL(
-          `https://api.trello.com/1${path}`
-        );
-
-
-      url.searchParams.set(
-        "key",
-        window.RCL_APP_KEY
-      );
-
-
-      url.searchParams.set(
-        "token",
-        token
-      );
-
-
-      Object.entries(params).forEach(
-        ([key,value]) => {
-
-          if(
-            value !== undefined &&
-            value !== null
-          ){
-
-            url.searchParams.set(
-              key,
-              String(value)
-            );
-
-          }
-
-        }
-      );
-
-
-      const response =
-        await fetch(
-          url.toString(),
-          {
-            method,
-            headers:{
-              "Accept":
-                "application/json"
-            }
-          }
-        );
-
-
-      let data = null;
-
-
-      const contentType =
-        response.headers.get(
-          "content-type"
-        );
-
-
-      if(
-        contentType &&
-        contentType.includes(
-          "application/json"
-        )
-      ){
-
-        data =
-          await response.json();
-
-      }
-      else{
-
-        const text =
-          await response.text();
-
-        data =
-          text
-            ? { message:text }
-            : null;
-
-      }
-
-
-      if(!response.ok){
-
-        throw new Error(
-          data?.message ||
-          `Trello API error: ${response.status}`
-        );
-
-      }
-
-
-      return data;
-
-    }
-
-
-    /*
-      Create checklist on current card.
+      Create the checklist.
     */
 
     const checklist =
@@ -1794,25 +2042,13 @@ async function addToCard(){
         }
       );
 
-
-    if(
-      !checklist ||
-      !checklist.id
-    ){
-
-      throw new Error(
-        "Trello did not return a checklist ID."
-      );
-
-    }
-
-
     /*
-      Create every checklist item.
+      Create each checklist item.
     */
 
     for(
-      const item of selected.items
+      const item
+      of selected.items
     ){
 
       const itemName =
@@ -1822,11 +2058,9 @@ async function addToCard(){
               item?.name || ""
             ).trim();
 
-
       if(!itemName){
         continue;
       }
-
 
       await trelloRequest(
         "POST",
@@ -1835,41 +2069,71 @@ async function addToCard(){
           name:itemName
         }
       );
-
     }
 
-
-    /*
-      Success.
-    */
-
     screen = "added";
-
     render();
-
 
     toast(
       "Checklist added to Trello card."
     );
 
-
-  }
-  catch(error){
+  }catch(error){
 
     console.error(
       "[Checklist Library] Add to Card error:",
       error
     );
 
+    screen = "preview";
+    render();
 
-    toast(
-      error?.message ||
-      "Failed to add checklist to Trello card.",
-      true
-    );
+    if(
+      error?.message ===
+      "NOT_AUTHORIZED" ||
+      error?.code ===
+      "NOT_AUTHORIZED"
+    ){
+
+      toast(
+        "Please connect the Power-Up to Trello first.",
+        true
+      );
+
+      try{
+
+        const trello =
+          await getTrelloContext();
+
+        await trello.popup({
+          title:
+            "Connect Trello Account",
+          url:
+            "./auth.html",
+          height:
+            320
+        });
+
+      }catch(e){
+
+        console.error(
+          "Authorization popup error:",
+          e
+        );
+
+      }
+
+    }else{
+
+      toast(
+        error?.message ||
+        "Failed to add checklist to Trello card.",
+        true
+      );
+
+    }
 
   }
-
 }
 
 function added(){
@@ -1879,35 +2143,55 @@ function added(){
     <div class="success">
 
       <div class="check">
-        ...
+        ✓
       </div>
 
       <h2>
-        Adding Checklist…
+        Checklist Added
       </h2>
 
       <p>
-        ${esc(selected?.name || "Checklist")}
-        is being added to this Trello card.
+        ${esc(
+          selected?.name ||
+          "Checklist"
+        )}
+        has been added to this Trello card.
       </p>
+
+      <div class="success-actions">
+
+        <button
+          class="primary"
+          onclick="screen='list';render()"
+        >
+          Done
+        </button>
+
+      </div>
 
     </div>
 
   `;
-
 }
 
 render();
 
 </script>
-<script type="module">
-  import {
-    APP_KEY,
-    APP_NAME
-  } from "/src/lib/auth.js";
 
-  window.RCL_APP_KEY = APP_KEY;
-  window.RCL_APP_NAME = APP_NAME;
+<script type="module">
+
+import {
+  APP_KEY,
+  APP_NAME
+} from "/src/lib/auth.js";
+
+window.RCL_APP_KEY =
+  APP_KEY;
+
+window.RCL_APP_NAME =
+  APP_NAME;
+
 </script>
+
 </body>
 </html>
