@@ -671,6 +671,195 @@ button{cursor:pointer}
     overflow:hidden;
   }
 }
+/* =========================================================
+   FINAL CHECKLIST LIBRARY LAYOUT FIX
+   ========================================================= */
+
+/* Prevent the checklist iframe itself from creating
+   an unwanted second page scrollbar */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#app {
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  min-height: 0;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Header stays fixed */
+.header {
+  flex: none;
+}
+
+/* The actual checklist content becomes the ONLY
+   scrollable area */
+.content {
+  height: calc(100% - 54px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 11px 14px 24px;
+}
+
+/* Clean scrollbar for checklist content */
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #9aa5b1;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   TEMPLATE ROW
+   ========================================================= */
+
+.template {
+  width: 100%;
+  min-width: 0;
+  min-height: 62px;
+
+  display: grid;
+
+  /*
+     Icon | Name | Count | Menu
+  */
+  grid-template-columns:
+    44px
+    minmax(0, 1fr)
+    max-content
+    32px;
+
+  align-items: center;
+
+  column-gap: 8px;
+
+  padding: 7px 0;
+
+  border-bottom: 1px solid #f1f2f4;
+
+  overflow: hidden;
+}
+
+/* Icon */
+.template .doc {
+  width: 44px;
+  height: 44px;
+
+  border-radius: 10px;
+
+  display: grid;
+  place-items: center;
+
+  background: #f1f5fa;
+
+  color: #44546f;
+
+  font-size: 16px;
+
+  flex: none;
+}
+
+/* Template name */
+.template .template-name {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-weight: 700;
+  color: #172b4d;
+}
+
+/* Item count */
+.template .count {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: max-content;
+  max-width: 62px;
+
+  padding: 5px 7px;
+
+  border-radius: 999px;
+
+  background: #f1f2f4;
+
+  color: #526581;
+
+  font-size: 11px;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  flex: none;
+}
+
+/* Three-dot menu */
+.template .more {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  border: 0;
+  border-radius: 6px;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #44546f;
+
+  font-size: 17px;
+
+  flex: none;
+}
+
+.template .more:hover {
+  background: #f1f2f4;
+}
+
+/* Category spacing */
+.category {
+  margin: 20px 2px 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #526581;
+}
+
+/* Starter information box */
+.starter-info {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Prevent any child from forcing horizontal overflow */
+.content * {
+  max-width: 100%;
+}
 </style>
 </head>
 
