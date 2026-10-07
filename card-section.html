@@ -16,6 +16,9 @@
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: auto;
+      overflow: hidden !important;
       background: transparent;
       color: #172b4d;
       font-family:
@@ -28,12 +31,14 @@
     }
 
     .section {
+      width: 100%;
       padding: 2px 0 8px;
+      overflow: hidden;
     }
 
     .heading {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
       margin-bottom: 8px;
     }
@@ -41,6 +46,7 @@
     .icon {
       width: 28px;
       height: 28px;
+      min-width: 28px;
       border-radius: 8px;
       background: #0b3b4a;
       color: white;
@@ -49,16 +55,24 @@
       font-size: 15px;
     }
 
+    .heading-content {
+      min-width: 0;
+    }
+
     .title {
       font-size: 15px;
       font-weight: 700;
       color: #172b4d;
+      line-height: 28px;
+      white-space: nowrap;
     }
 
     .subtitle {
       font-size: 12px;
       color: #626f86;
       margin-top: 2px;
+      line-height: 18px;
+      white-space: nowrap;
     }
 
     .open {
@@ -87,25 +101,33 @@
 
   <section class="section">
 
-  <div class="heading">
-    <div class="icon">▤</div>
+    <div class="heading">
 
-    <div>
-      <div class="subtitle">
-        Add reusable checklists from your template library to this card.
+      <div class="icon">▤</div>
+
+      <div class="heading-content">
+
+        <div class="title">
+          Checklist Templates
+        </div>
+
+        <div class="subtitle">
+          Add reusable checklists from your template library to this card.
+        </div>
+
       </div>
+
     </div>
-  </div>
 
-  <button
-    class="open"
-    id="openLibrary"
-    type="button"
-  >
-    ▤ &nbsp; Add from Template
-  </button>
+    <button
+      class="open"
+      id="openLibrary"
+      type="button"
+    >
+      ▤ &nbsp; Add from Template
+    </button>
 
-</section>
+  </section>
 
   <script>
     const t = TrelloPowerUp.iframe();
@@ -113,32 +135,31 @@
     const openLibraryButton =
       document.getElementById("openLibrary");
 
-    openLibraryButton.addEventListener("click", async function (event) {
+    openLibraryButton.addEventListener(
+      "click",
+      async function (event) {
 
-      try {
+        try {
 
-        await t.popup({
-          title: "Checklist Templates",
+          await t.popup({
+            title: "Checklist Templates",
+            url: t.signUrl("./checklists.html"),
+            height: 640,
+            mouseEvent: event
+          });
 
-          url: t.signUrl("./checklists.html"),
+        } catch (error) {
 
-          height: 640,
+          console.error(
+            "Failed to open Checklist Library:",
+            error
+          );
 
-          mouseEvent: event
-        });
-
-      } catch (error) {
-
-        console.error(
-          "Failed to open Checklist Library:",
-          error
-        );
+        }
 
       }
-
-    });
+    );
   </script>
 
 </body>
-
 </html>
