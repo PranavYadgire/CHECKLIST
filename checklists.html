@@ -1058,6 +1058,76 @@ body{
     overflow:visible !important;
   }
 }
+/* =====================================================
+   FINAL - ONE VISIBLE SCROLLBAR
+   ===================================================== */
+
+/* Page can still scroll */
+html,
+body {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  /* Hide this scrollbar visually */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+/* App must not create another scrollbar */
+#app {
+  width: 100% !important;
+  max-width: 460px !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 auto !important;
+
+  overflow: visible !important;
+}
+
+/* Content follows the page */
+.content {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  overflow: visible !important;
+
+  padding-bottom: 160px !important;
+}
+
+/* Never show a content scrollbar */
+.content {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.content::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+/* Extra real space after final template */
+.content::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 120px;
+}
 </style>
 </head>
 
