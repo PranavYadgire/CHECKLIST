@@ -679,15 +679,24 @@ button{cursor:pointer}
    CHECKLIST LIBRARY SCROLL FIX
    ========================================================= */
 /* =========================================================
-   POPUP SCROLL FIX
+   FINAL POPUP SCROLL
    ========================================================= */
 
-html,
-body {
-  margin: 0;
+html {
   width: 100%;
-  min-height: 0;
-  overflow: hidden !important;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #f7f8fa;
 }
 
 #app {
