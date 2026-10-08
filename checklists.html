@@ -1032,40 +1032,60 @@ button{
   }
 }
 /* =====================================================
-   TREllo POPUP - REMOVE INTERNAL SCROLLBAR
+   FINAL SCROLL FIX
+   Trello popup = ONLY scrollbar
    ===================================================== */
 
-html,
-body {
-  overflow: visible !important;
-  height: auto !important;
-  min-height: 0 !important;
+html {
   width: 100% !important;
+  height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  /* REMOVE CHECKLIST PAGE SCROLLBAR */
+  overflow: hidden !important;
 }
 
 #app {
   width: 100% !important;
   max-width: 460px !important;
+
   height: auto !important;
   min-height: 0 !important;
-  overflow: visible !important;
+
   margin: 0 auto !important;
+
+  overflow: visible !important;
 }
 
 .content {
   width: 100% !important;
+
   height: auto !important;
   min-height: 0 !important;
+
+  /* NO INTERNAL SCROLLBAR */
   overflow: visible !important;
 }
 
-/* Remove the scrollbar styling from content */
+/* Make absolutely sure content cannot show a scrollbar */
 .content::-webkit-scrollbar {
+  display: none !important;
   width: 0 !important;
   height: 0 !important;
-  display: none !important;
+}
+
+.content {
+  scrollbar-width: none !important;
 }
 </style>
 </head>
