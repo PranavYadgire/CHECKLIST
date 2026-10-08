@@ -25,28 +25,14 @@
   box-sizing:border-box;
 }
 
-html{
-  margin:0 !important;
-  padding:0 !important;
-  width:100% !important;
-  min-height:0 !important;
-  height:auto !important;
-  overflow:hidden !important;
-}
-
+html,
 body{
-  margin:0 !important;
-  padding:0 !important;
-  width:100% !important;
-  min-height:0 !important;
-  height:auto !important;
-
-  /*
-    IMPORTANT:
-    The Trello popup owns the vertical scrolling.
-    The iframe/page itself must NOT create another scrollbar.
-  */
-  overflow:hidden !important;
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  overflow-y:auto;
+  overflow-x:hidden;
 
   font-family:
     -apple-system,
@@ -78,19 +64,10 @@ button{
 #app{
   width:100%;
   max-width:460px;
-
-  /*
-    DO NOT use height:100vh here.
-    The content must determine the document height so Trello
-    can provide the ONE scrollbar.
-  */
-  height:auto !important;
-  min-height:0 !important;
-
+  min-height:100vh;
   margin:0 auto;
   background:#fff;
-
-  overflow:visible !important;
+  overflow:visible;
 }
 
 /* =========================================================
@@ -148,19 +125,13 @@ button{
    CONTENT
    ========================================================= */
 
-/*
-  CRITICAL:
-  .content must NOT scroll.
-  Trello's popup handles vertical scrolling.
-*/
 .content{
   width:100%;
-  height:auto !important;
-  min-height:0 !important;
+  min-height:0;
 
-  overflow:visible !important;
+  overflow:visible;
 
-  padding:14px 16px 22px;
+  padding:14px 16px 100px;
 }
 
 /* =========================================================
@@ -433,6 +404,7 @@ button{
   justify-self:end;
 
   display:inline-flex;
+
   align-items:center;
   justify-content:center;
 
@@ -506,7 +478,6 @@ button{
   text-align:left;
 
   border:0;
-
   background:#fff;
 
   padding:9px 10px;
@@ -594,6 +565,7 @@ button{
 
 .empty{
   text-align:center;
+
   color:var(--muted);
 
   padding:42px 12px;
@@ -697,6 +669,7 @@ button{
   border:1px dashed #b7c2d0;
 
   background:#fff;
+
   color:var(--blue);
 
   border-radius:8px;
@@ -820,6 +793,7 @@ button{
 
 .preview-head strong{
   display:block;
+
   font-size:14px;
 }
 
@@ -941,6 +915,7 @@ button{
 
 .pick:hover{
   background:#f8fafc;
+
   border-color:#e6ebf2;
 }
 
@@ -1016,10 +991,61 @@ button{
 }
 
 /* =========================================================
+   FINAL SCROLL CONTROL
+   ========================================================= */
+
+/* The document/page owns the ONE vertical scrollbar */
+html,
+body{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+/* Never create a second scrollbar here */
+#app{
+  height:auto !important;
+  min-height:100vh !important;
+  overflow:visible !important;
+}
+
+.content{
+  height:auto !important;
+  min-height:0 !important;
+  overflow:visible !important;
+
+  /*
+     Extra bottom space guarantees that the final
+     template row can be scrolled completely above
+     the bottom edge of the Trello popup.
+  */
+  padding-bottom:140px !important;
+}
+
+/* Extra real document height after the last item */
+.content::after{
+  content:"";
+  display:block;
+  width:100%;
+  height:100px;
+}
+
+/* Absolutely no scrollbar on content */
+.content::-webkit-scrollbar{
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
+.content{
+  scrollbar-width:none !important;
+}
+
+/* =========================================================
    DESKTOP
    ========================================================= */
 
 @media(min-width:700px){
+
   body{
     background:#f1f2f4;
     padding:22px 0;
@@ -1029,125 +1055,8 @@ button{
     border-radius:12px;
     box-shadow:var(--shadow);
     min-height:0;
+    overflow:visible !important;
   }
-}
-/* =====================================================
-   FINAL SCROLL FIX
-   Trello popup = ONLY scrollbar
-   ===================================================== */
-
-html {
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-body {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-
-  /* REMOVE CHECKLIST PAGE SCROLLBAR */
-  overflow: hidden !important;
-}
-
-#app {
-  width: 100% !important;
-  max-width: 460px !important;
-
-  height: auto !important;
-  min-height: 0 !important;
-
-  margin: 0 auto !important;
-
-  overflow: visible !important;
-}
-
-.content {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-
-  /* Space below the last template */
-  padding-bottom: 90px !important;
-}
-
-/* Make absolutely sure content cannot show a scrollbar */
-.content::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-.content {
-  scrollbar-width: none !important;
-}
-/* =====================================================
-   FINAL - TREllo POPUP CONTENT HEIGHT FIX
-   ===================================================== */
-
-html,
-body {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
-}
-
-#app {
-  width: 100% !important;
-  max-width: 460px !important;
-
-  height: auto !important;
-  min-height: 0 !important;
-
-  margin: 0 auto !important;
-
-  overflow: visible !important;
-}
-
-/*
-  The checklist page itself must never become
-  a separate scroll container.
-*/
-.content {
-  width: 100% !important;
-
-  height: auto !important;
-  min-height: 0 !important;
-
-  overflow: visible !important;
-
-  padding-bottom: 140px !important;
-}
-
-/*
-  Force real document height after the final template.
-  This gives Trello enough content area to scroll
-  completely past the last item.
-*/
-.content::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100px;
-}
-
-/* No internal scrollbar */
-.content::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-}
-
-.content {
-  scrollbar-width: none !important;
 }
 </style>
 </head>
