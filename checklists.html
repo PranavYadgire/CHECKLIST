@@ -678,29 +678,34 @@ button{cursor:pointer}
 /* =========================================================
    CHECKLIST LIBRARY SCROLL FIX
    ========================================================= */
+/* =========================================================
+   POPUP SCROLL FIX
+   ========================================================= */
 
 html,
 body {
-  width: 100%;
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden !important;
 }
 
 #app {
   width: 100%;
-  max-width: 430px;
+  max-width: 460px;
   margin: 0 auto;
-  background: #fff;
-  min-height: 100vh;
+  min-height: 0;
+  height: auto;
   overflow: visible;
+  background: #fff;
 }
 
 .content {
   height: auto;
-  overflow: visible;
-  padding: 14px 16px 22px;
+  min-height: 0;
+  overflow: visible !important;
 }
+
 /* =========================================================
    TEMPLATE ROW
    ========================================================= */
