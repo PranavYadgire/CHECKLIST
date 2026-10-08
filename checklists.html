@@ -12,12 +12,9 @@
   --blue:#0c66e4;
   --blue-dark:#0747a6;
   --blue-soft:#e9f2ff;
-  --blue-soft-2:#f4f8ff;
   --text:#172b4d;
   --muted:#6b778c;
   --line:#e6e9ee;
-  --surface:#fff;
-  --surface-soft:#f7f8fa;
   --danger:#c9372c;
   --danger-soft:#ffebe6;
   --green:#22a06b;
@@ -28,13 +25,29 @@
   box-sizing:border-box;
 }
 
-html,
+html{
+  margin:0 !important;
+  padding:0 !important;
+  width:100% !important;
+  min-height:0 !important;
+  height:auto !important;
+  overflow:hidden !important;
+}
+
 body{
-  margin:0;
-  width:100%;
-  min-height:100%;
-  overflow-x:hidden;
-  overflow-y:auto;
+  margin:0 !important;
+  padding:0 !important;
+  width:100% !important;
+  min-height:0 !important;
+  height:auto !important;
+
+  /*
+    IMPORTANT:
+    The Trello popup owns the vertical scrolling.
+    The iframe/page itself must NOT create another scrollbar.
+  */
+  overflow:hidden !important;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -42,6 +55,7 @@ body{
     Roboto,
     Arial,
     sans-serif;
+
   color:var(--text);
   font-size:13px;
   background:#f7f8fa;
@@ -57,22 +71,43 @@ button{
   cursor:pointer;
 }
 
+/* =========================================================
+   APP
+   ========================================================= */
+
 #app{
   width:100%;
   max-width:460px;
-  min-height:100vh;
+
+  /*
+    DO NOT use height:100vh here.
+    The content must determine the document height so Trello
+    can provide the ONE scrollbar.
+  */
+  height:auto !important;
+  min-height:0 !important;
+
   margin:0 auto;
   background:#fff;
+
+  overflow:visible !important;
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .header{
   height:58px;
   padding:0 16px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   background:#fff;
   border-bottom:1px solid var(--line);
+
   position:sticky;
   top:0;
   z-index:10;
@@ -89,13 +124,17 @@ button{
 .close{
   width:32px;
   height:32px;
+
   border:0;
   border-radius:7px;
+
   background:transparent;
   color:#44546f;
+
   font-size:22px;
   line-height:1;
   padding:0;
+
   display:grid;
   place-items:center;
 }
@@ -105,24 +144,42 @@ button{
   color:var(--text);
 }
 
-/* ONE AND ONLY VERTICAL SCROLL CONTAINER */
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+/*
+  CRITICAL:
+  .content must NOT scroll.
+  Trello's popup handles vertical scrolling.
+*/
 .content{
   width:100%;
-  min-height:0;
-  overflow:visible;
+  height:auto !important;
+  min-height:0 !important;
+
+  overflow:visible !important;
+
   padding:14px 16px 22px;
 }
 
-/* Search */
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
 .search{
   width:100%;
   height:40px;
+
   border:1px solid #b7c2d0;
   border-radius:9px;
+
   padding:0 12px;
+
   outline:none;
   background:#fff;
   color:var(--text);
+
   transition:.15s;
 }
 
@@ -142,21 +199,31 @@ button{
   box-shadow:0 0 0 3px rgba(12,102,228,.12);
 }
 
-/* Main tabs */
+/* =========================================================
+   MAIN TABS
+   ========================================================= */
+
 .tabs{
   display:flex;
   gap:2px;
+
   border-bottom:1px solid var(--line);
+
   margin-top:12px;
 }
 
 .tab{
   flex:1;
+
   border:0;
   background:transparent;
+
   color:#5e6c84;
+
   padding:11px 7px 10px;
+
   font-weight:600;
+
   position:relative;
 }
 
@@ -172,25 +239,38 @@ button{
 
 .tab.active::after{
   content:"";
+
   position:absolute;
+
   left:14px;
   right:14px;
   bottom:-1px;
+
   height:2px;
+
   border-radius:2px;
+
   background:var(--blue);
 }
 
-/* Create */
+/* =========================================================
+   CREATE
+   ========================================================= */
+
 .create{
   width:100%;
+
   border:1px solid #cfe0fb;
   border-radius:9px;
+
   background:var(--blue-soft);
   color:var(--blue-dark);
+
   font-weight:750;
+
   padding:11px 12px;
   margin:13px 0 17px;
+
   transition:.15s;
 }
 
@@ -200,14 +280,20 @@ button{
   transform:translateY(-1px);
 }
 
-/* Starter intro */
+/* =========================================================
+   STARTER INTRO
+   ========================================================= */
+
 .starter-intro{
   display:flex;
   gap:10px;
   align-items:flex-start;
+
   background:linear-gradient(135deg,#f4f8ff,#fff);
+
   border:1px solid #dbe7f8;
   border-radius:11px;
+
   padding:12px;
   margin:13px 0 17px;
 }
@@ -215,12 +301,17 @@ button{
 .starter-intro-icon{
   width:34px;
   height:34px;
+
   flex:none;
+
   border-radius:9px;
+
   background:var(--blue-soft);
   color:var(--blue);
+
   display:grid;
   place-items:center;
+
   font-size:17px;
 }
 
@@ -232,16 +323,23 @@ button{
 
 .starter-intro p{
   margin:0;
+
   color:var(--muted);
+
   font-size:11px;
   line-height:1.45;
 }
 
-/* Categories */
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
 .category{
   font-size:12px;
   font-weight:700;
+
   margin:18px 2px 7px;
+
   color:#526581;
   letter-spacing:.2px;
 }
@@ -250,17 +348,31 @@ button{
   margin-top:2px;
 }
 
-/* Template row */
+/* =========================================================
+   TEMPLATE
+   ========================================================= */
+
 .template{
   width:100%;
   min-width:0;
   min-height:62px;
+
   display:grid;
-  grid-template-columns:44px minmax(0,1fr) max-content 32px;
+
+  grid-template-columns:
+    44px
+    minmax(0,1fr)
+    max-content
+    32px;
+
   align-items:center;
+
   column-gap:8px;
+
   padding:7px 0;
+
   border-bottom:1px solid #f1f2f4;
+
   overflow:hidden;
 }
 
@@ -271,12 +383,18 @@ button{
 .doc{
   width:44px;
   height:44px;
+
   border-radius:10px;
+
   background:#f1f5fa;
+
   display:grid;
   place-items:center;
+
   color:#44546f;
+
   font-size:16px;
+
   flex:none;
 }
 
@@ -288,51 +406,71 @@ button{
 
 .template-name{
   display:block;
+
   width:100%;
   min-width:0;
+
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
+
   font-weight:700;
   color:#172b4d;
 }
 
 .template-sub{
   display:block;
+
   color:var(--muted);
+
   font-size:10px;
   font-weight:500;
+
   margin-top:2px;
 }
 
 .count{
   justify-self:end;
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
+
   width:max-content;
   max-width:62px;
+
   padding:5px 7px;
+
   border-radius:999px;
+
   background:#f1f2f4;
   color:#526581;
+
   font-size:11px;
   line-height:1;
+
   white-space:nowrap;
+
   flex:none;
 }
 
 .more{
   width:32px;
   height:32px;
+
   border:0;
   border-radius:6px;
+
   background:transparent;
   color:#44546f;
+
   padding:0;
+
   display:grid;
   place-items:center;
+
   font-size:17px;
+
   flex:none;
 }
 
@@ -340,26 +478,43 @@ button{
   background:#f1f2f4;
 }
 
-/* Popup menu */
+/* =========================================================
+   POPUP MENU
+   ========================================================= */
+
 .menu{
   position:fixed;
+
   z-index:100;
+
   background:#fff;
+
   border:1px solid #dfe3e8;
+
   box-shadow:0 12px 30px rgba(9,30,66,.18);
+
   border-radius:10px;
+
   width:190px;
+
   padding:5px;
 }
 
 .menu button{
   width:100%;
+
   text-align:left;
+
   border:0;
+
   background:#fff;
+
   padding:9px 10px;
+
   border-radius:7px;
+
   color:var(--text);
+
   font-weight:600;
 }
 
@@ -375,13 +530,20 @@ button{
   background:var(--danger-soft);
 }
 
-/* Footer */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .footer{
   padding:11px 16px 16px;
+
   display:flex;
   justify-content:flex-end;
+
   gap:8px;
+
   border-top:1px solid var(--line);
+
   background:#fff;
 }
 
@@ -390,14 +552,18 @@ button{
 .danger-btn{
   border:0;
   border-radius:8px;
+
   padding:9px 13px;
+
   font-weight:750;
+
   transition:.15s;
 }
 
 .primary{
   background:var(--blue);
   color:#fff;
+
   box-shadow:0 1px 2px rgba(9,30,66,.12);
 }
 
@@ -418,17 +584,25 @@ button{
 .danger-btn{
   background:#fff;
   color:var(--danger);
+
   border:1px solid #ffbdad;
 }
 
-/* Empty */
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
 .empty{
   text-align:center;
   color:var(--muted);
+
   padding:42px 12px;
 }
 
-/* Form */
+/* =========================================================
+   FORM
+   ========================================================= */
+
 .form{
   padding:18px 16px 20px;
 }
@@ -439,7 +613,9 @@ button{
 
 .field label{
   display:block;
+
   font-weight:750;
+
   margin-bottom:7px;
 }
 
@@ -447,10 +623,14 @@ button{
 .field select{
   width:100%;
   height:40px;
+
   border:1px solid #b7c2d0;
   border-radius:8px;
+
   padding:0 10px;
+
   background:#fff;
+
   outline:none;
 }
 
@@ -462,38 +642,49 @@ button{
 .items{
   display:flex;
   flex-direction:column;
+
   gap:7px;
 }
 
 .item{
   display:flex;
   align-items:center;
+
   gap:7px;
 }
 
 .grip{
   width:14px;
+
   color:#8a95a5;
+
   text-align:center;
 }
 
 .item-input{
   flex:1;
   min-width:0;
+
   height:36px;
+
   border:1px solid var(--line);
   border-radius:8px;
+
   padding:0 9px;
+
   outline:none;
 }
 
 .trash{
   width:30px;
   height:30px;
+
   border:0;
   border-radius:7px;
+
   background:transparent;
   color:#6b778c;
+
   padding:0;
 }
 
@@ -504,11 +695,16 @@ button{
 
 .add-item{
   border:1px dashed #b7c2d0;
+
   background:#fff;
   color:var(--blue);
+
   border-radius:8px;
+
   padding:8px 11px;
+
   margin-top:9px;
+
   font-weight:700;
 }
 
@@ -520,73 +716,105 @@ button{
 .form-actions{
   display:flex;
   justify-content:flex-end;
+
   gap:8px;
+
   border-top:1px solid var(--line);
+
   margin-top:20px;
   padding-top:13px;
 }
 
-/* Success */
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
 .success{
   text-align:center;
+
   padding:48px 22px;
 }
 
 .check{
   width:50px;
   height:50px;
+
   border-radius:50%;
+
   display:grid;
   place-items:center;
+
   background:#e3fcef;
   color:var(--green);
+
   font-size:27px;
+
   margin:0 auto 14px;
 }
 
 .success h2{
   font-size:18px;
+
   margin:0 0 6px;
 }
 
 .success p{
   color:var(--muted);
+
   line-height:1.5;
+
   margin:0;
 }
 
 .success-actions{
   display:flex;
   justify-content:center;
+
   gap:8px;
+
   margin-top:20px;
 }
 
-/* Preview */
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
 .preview{
   padding:17px 16px 18px;
 }
 
 .preview-head{
   display:flex;
+
   gap:11px;
+
   align-items:center;
+
   margin-bottom:15px;
+
   padding:12px;
+
   border:1px solid #e2e7ee;
+
   border-radius:11px;
+
   background:#fafbfc;
 }
 
 .preview-icon{
   width:38px;
   height:38px;
+
   border-radius:9px;
+
   background:var(--blue-soft);
   color:var(--blue);
+
   display:grid;
   place-items:center;
+
   font-size:18px;
+
   flex:none;
 }
 
@@ -597,18 +825,27 @@ button{
 
 .preview-head small{
   display:block;
+
   color:var(--muted);
+
   margin-top:3px;
 }
 
 .preview-item{
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
   border:1px solid #e4e8ee;
+
   border-radius:9px;
+
   padding:10px 11px;
+
   margin-bottom:7px;
+
   background:#fff;
 }
 
@@ -620,25 +857,37 @@ button{
 .preview-item input{
   width:16px;
   height:16px;
+
   accent-color:var(--blue);
+
   flex:none;
 }
 
 .preview-actions{
   display:flex;
   justify-content:flex-end;
+
   gap:8px;
+
   border-top:1px solid var(--line);
+
   margin-top:16px;
   padding-top:13px;
 }
 
-/* Category tabs */
+/* =========================================================
+   CATEGORY TABS
+   ========================================================= */
+
 .category-tabs{
   display:flex;
+
   overflow-x:auto;
+
   border-bottom:1px solid var(--line);
+
   margin:10px 0 10px;
+
   scrollbar-width:none;
 }
 
@@ -648,28 +897,45 @@ button{
 
 .category-tabs button{
   border:0;
+
   background:transparent;
+
   color:#5e6c84;
+
   padding:9px 10px;
+
   white-space:nowrap;
+
   font-weight:600;
 }
 
 .category-tabs button.active{
   color:var(--blue);
+
   font-weight:750;
+
   border-bottom:2px solid var(--blue);
 }
 
-/* Picker */
+/* =========================================================
+   PICKER
+   ========================================================= */
+
 .pick{
   display:flex;
+
   align-items:center;
+
   gap:9px;
+
   min-height:52px;
+
   padding:7px;
+
   border:1px solid transparent;
+
   border-radius:9px;
+
   margin-bottom:3px;
 }
 
@@ -681,15 +947,21 @@ button{
 .pick-name{
   flex:1;
   min-width:0;
+
   font-weight:650;
 }
 
 .pick button{
   border:1px solid #cfe0fb;
+
   background:var(--blue-soft);
+
   color:var(--blue-dark);
+
   border-radius:7px;
+
   padding:6px 10px;
+
   font-weight:750;
 }
 
@@ -697,20 +969,33 @@ button{
   background:#dcecff;
 }
 
-/* Status */
+/* =========================================================
+   STATUS
+   ========================================================= */
+
 .status{
   position:fixed;
+
   left:50%;
   bottom:16px;
+
   transform:translateX(-50%);
+
   background:#172b4d;
   color:#fff;
+
   padding:10px 14px;
+
   border-radius:9px;
+
   display:none;
+
   z-index:200;
+
   max-width:90%;
+
   text-align:center;
+
   box-shadow:0 8px 24px rgba(9,30,66,.22);
 }
 
@@ -722,19 +1007,17 @@ button{
   background:#c9372c;
 }
 
-/* Keep horizontal category tabs from creating vertical scrolling */
-.category-tabs{
-  scrollbar-width:none;
-}
+/* =========================================================
+   PREVENT HORIZONTAL OVERFLOW
+   ========================================================= */
 
-.category-tabs::-webkit-scrollbar{
-  display:none;
-}
-
-/* Prevent children from creating horizontal overflow */
 .content *{
   max-width:100%;
 }
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
 
 @media(min-width:700px){
   body{
