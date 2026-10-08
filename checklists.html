@@ -848,6 +848,57 @@ button{cursor:pointer}
 .content * {
   max-width: 100%;
 }
+
+/* =========================================================
+   FINAL - ONE SCROLLBAR ONLY
+   ========================================================= */
+
+html,
+body {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+#app {
+  width: 100% !important;
+  max-width: 460px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+
+.header {
+  height: 58px !important;
+  flex: 0 0 58px !important;
+}
+
+.content {
+  height: calc(100% - 58px) !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 14px 16px 22px !important;
+}
+
+/* Only the content area gets a scrollbar */
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #9aa5b1;
+  border-radius: 10px;
+}
 </style>
 </head>
 
