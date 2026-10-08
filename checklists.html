@@ -2227,8 +2227,7 @@ function picker(){
 
 function preview(){
 
-  const x =
-    selected;
+  const x = selected;
 
   if(!x){
     screen = "list";
@@ -2236,10 +2235,16 @@ function preview(){
     return;
   }
 
+  // Create a temporary editable copy.
+  // Original Starter Template will NOT be changed.
+  if(!selected.__previewItems){
+    selected.__previewItems = [...selected.items];
+  }
+
+  const items = selected.__previewItems;
+
   app.innerHTML =
-    header(
-      "Template Preview"
-    ) +
+    header("Template Preview") +
 
     `
 
@@ -2260,41 +2265,126 @@ function preview(){
           <small>
             ${esc(x.category)}
             ·
-            ${x.items.length} items
+            ${items.length} items
           </small>
 
         </div>
 
       </div>
 
-      ${
-        x.items
-          .map(
-            item => `
+      <div
+        class="preview-hint"
+        style="
+          font-size:12px;
+          color:#6b778c;
+          margin:10px 0 12px;
+        "
+      >
+        Drag items to reorder them. Click × to remove an item.
+      </div>
 
-              <div class="preview-item">
+      <div
+        id="previewItems"
+        class="preview-items"
+      >
+
+        ${
+          items.length
+            ?
+
+          items.map(
+            (item,index) => `
+
+              <div
+                class="preview-item"
+                draggable="true"
+                data-index="${index}"
+                style="
+                  display:flex;
+                  align-items:center;
+                  gap:10px;
+                  cursor:grab;
+                "
+              >
+
+                <span
+                  class="drag-handle"
+                  title="Drag to reorder"
+                  style="
+                    font-size:18px;
+                    color:#8993a4;
+                    cursor:grab;
+                    user-select:none;
+                  "
+                >
+                  ⋮⋮
+                </span>
 
                 <input
                   type="checkbox"
                   class="preview-checkbox"
                 >
 
-                <span>
+                <span
+                  style="
+                    flex:1;
+                    min-width:0;
+                  "
+                >
                   ${esc(item)}
                 </span>
+
+                <button
+                  type="button"
+                  class="preview-remove"
+                  onclick="removePreviewItem(${index})"
+                  title="Remove item"
+                  aria-label="Remove item"
+                  style="
+                    border:0;
+                    background:transparent;
+                    color:#c9372c;
+                    font-size:20px;
+                    cursor:pointer;
+                    padding:2px 6px;
+                    line-height:1;
+                  "
+                >
+                  ×
+                </button>
 
               </div>
 
             `
-          )
-          .join("")
-      }
+          ).join("")
+
+            :
+
+          `
+            <div
+              style="
+                padding:20px;
+                text-align:center;
+                color:#6b778c;
+                font-size:13px;
+              "
+            >
+              No checklist items.
+            </div>
+          `
+        }
+
+      </div>
 
       <div class="preview-actions">
 
         <button
           class="secondary"
-          onclick="screen='list';render()"
+          onclick="
+            selected.__previewItems = undefined;
+            screen='list';
+            render();
+          "
         >
           Back
         </button>
@@ -2302,6 +2392,7 @@ function preview(){
         <button
           class="primary"
           onclick="addToCard()"
+          ${items.length ? "" : "disabled"}
         >
           ＋ Add to Card
         </button>
@@ -2311,6 +2402,136 @@ function preview(){
     </main>
 
   `;
+
+  setupPreviewDragDrop();
+}
+
+
+/* ================================
+   REMOVE PREVIEW ITEM
+================================ */
+
+function removePreviewItem(index){
+
+  if(!selected || !selected.__previewItems){
+    return;
+  }
+
+  selected.__previewItems.splice(index,1);
+
+  render();
+}
+
+
+/* ================================
+   DRAG & DROP PREVIEW ITEMS
+================================ */
+
+function setupPreviewDragDrop(){
+
+  const container =
+    document.getElementById("previewItems");
+
+  if(!container){
+    return;
+  }
+
+  let draggedIndex = null;
+
+  const items =
+    container.querySelectorAll(".preview-item");
+
+  items.forEach(item => {
+
+    item.addEventListener("dragstart", event => {
+
+      draggedIndex =
+        Number(item.dataset.index);
+
+      item.style.opacity = "0.45";
+
+      event.dataTransfer.effectAllowed =
+        "move";
+
+    });
+
+
+    item.addEventListener("dragend", () => {
+
+      item.style.opacity = "1";
+
+      draggedIndex = null;
+
+      container
+        .querySelectorAll(".preview-item")
+        .forEach(el => {
+          el.style.borderTop = "";
+        });
+
+    });
+
+
+    item.addEventListener("dragover", event => {
+
+      event.preventDefault();
+
+      if(
+        draggedIndex === null ||
+        Number(item.dataset.index) === draggedIndex
+      ){
+        return;
+      }
+
+      item.style.borderTop =
+        "2px solid #0c66e4";
+
+    });
+
+
+    item.addEventListener("dragleave", () => {
+
+      item.style.borderTop = "";
+
+    });
+
+
+    item.addEventListener("drop", event => {
+
+      event.preventDefault();
+
+      const targetIndex =
+        Number(item.dataset.index);
+
+      item.style.borderTop = "";
+
+      if(
+        draggedIndex === null ||
+        draggedIndex === targetIndex
+      ){
+        return;
+      }
+
+      const currentItems =
+        selected.__previewItems;
+
+      const movedItem =
+        currentItems.splice(
+          draggedIndex,
+          1
+        )[0];
+
+      currentItems.splice(
+        targetIndex,
+        0,
+        movedItem
+      );
+
+      render();
+
+    });
+
+  });
+
 }
 
 /*
@@ -2500,9 +2721,9 @@ async function addToCard(){
     */
 
     for(
-      const item
-      of selected.items
-    ){
+  const item
+  of (selected.__previewItems || selected.items)
+){
 
       const itemName =
         typeof item === "string"
