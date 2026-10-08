@@ -45,7 +45,6 @@ TrelloPowerUp.initialize(
           return {
             authorized: false
           };
-
         }
 
       },
@@ -74,54 +73,41 @@ TrelloPowerUp.initialize(
           );
 
           throw error;
-
         }
 
       },
 
 
     /*
-     * Add the Checklist Library as a card button.
-     *
-     * IMPORTANT:
-     * We intentionally do NOT use card-back-section here.
-     *
-     * card-back-section automatically creates Trello's
-     * native section header and dropdown arrow.
+     * Card-back Power-Up section.
      */
-    "card-buttons":
+    "card-back-section":
       function (t) {
 
-        return [
-          {
-            text:
-              "Checklist Templates",
+        return {
 
-            icon:
-              ICON_URL,
+          title:
+            "Checklist Templates",
 
-            callback:
-              function (t) {
+          icon:
+            ICON_URL,
 
-                return t.popup({
+          content: {
 
-                  title:
-                    "Checklist Templates",
+            type:
+              "iframe",
 
-                  url:
-                    t.signUrl(
-                      `${window.location.origin}/card-section.html`
-                    ),
+            url:
+              t.signUrl(
+                `${window.location.origin}/card-section.html`
+              ),
 
-                  height:
-                    220
-
-                });
-
-              }
+            height:
+              115
 
           }
-        ];
+
+        };
 
       }
 
