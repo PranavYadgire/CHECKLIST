@@ -1087,6 +1087,68 @@ body {
 .content {
   scrollbar-width: none !important;
 }
+/* =====================================================
+   FINAL - TREllo POPUP CONTENT HEIGHT FIX
+   ===================================================== */
+
+html,
+body {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+#app {
+  width: 100% !important;
+  max-width: 460px !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 auto !important;
+
+  overflow: visible !important;
+}
+
+/*
+  The checklist page itself must never become
+  a separate scroll container.
+*/
+.content {
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  overflow: visible !important;
+
+  padding-bottom: 140px !important;
+}
+
+/*
+  Force real document height after the final template.
+  This gives Trello enough content area to scroll
+  completely past the last item.
+*/
+.content::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+/* No internal scrollbar */
+.content::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+
+.content {
+  scrollbar-width: none !important;
+}
 </style>
 </head>
 
